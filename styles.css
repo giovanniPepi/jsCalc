@@ -1,0 +1,100 @@
+body {
+    font-family: Roboto;
+    display: flex; 
+    justify-content: center;
+    align-content: center;
+    background: rgb(240, 240, 240);
+    text-align: center;
+    margin: 2rem;
+}
+
+.container {
+    background: rgb(72, 67, 87);
+    border-radius: 2rem;
+    padding: 1.4rem;
+    max-height: 52rem;
+    max-width: 37rem;
+}
+
+.logo {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding: 0;
+}
+
+.visor {
+    background: rgb(173,171, 168);
+    border-radius: 1rem;;
+    margin-bottom: 1rem;
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.visorP {
+    color: rgb(45, 45, 45);
+    margin: 1.5rem;
+    display: flex;
+    align-self:flex-end;
+    font-weight: bold;
+    font-size: 3.3rem;
+    padding: 1rem;
+    height: 10rem;
+}
+
+.buttonContainer1, .buttonContainer2, 
+.buttonContainer3, .buttonContainer4 {
+    font-size: 1.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons, .buttonsFunc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: .25rem;
+    padding: .5rem;
+    height: 4rem;
+    width: 4rem;
+    color: rgb(225, 225, 225);
+    font-weight: bold;
+    border: .5rem solid rgb(156, 150, 160);
+    border-radius: 1rem;
+}
+
+.buttonsFunc {
+    border: .5rem solid  rgb(226, 85, 104);;
+    color: rgb(226, 85, 104);
+}
+
+.buttonsFunc:hover {
+    background-color: rgb(211, 128, 146);
+    color:rgb(200, 200, 200);
+}
+
+.buttonsFunc:active {
+    background-color: rgb(209, 108, 130);
+    color:rgb(200, 200, 200);
+}
+
+.buttons:hover {
+    background-color:  rgb(156, 150, 160);
+}
+
+.buttons:active {
+    background-color:  rgb(118, 108, 126);
+}
+
+img {
+    height: 100%;
+    width: 6%;
+    transition: transform 1.5s cubic-bezier(0,.83,.27,1.55);  
+}
+
+Img:hover {
+    transform: rotate(720deg) scale(1.2);
+}
+
+
