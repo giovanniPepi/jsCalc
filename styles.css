@@ -65,17 +65,18 @@ body {
 }
 
 .buttonsFunc {
-    border: .5rem solid  rgb(226, 85, 104);;
+    border: .5rem solid  rgb(226, 85, 104);
     color: rgb(226, 85, 104);
 }
 
 .buttonsFunc:hover {
-    background-color: rgb(211, 128, 146);
+    background-color: rgb(226, 85, 104);
     color:rgb(200, 200, 200);
 }
 
 .buttonsFunc:active {
-    background-color: rgb(209, 108, 130);
+    background-color: rgb(230, 59, 81);
+    border: .5rem solid rgb(230, 59, 81);
     color:rgb(200, 200, 200);
 }
 
@@ -85,6 +86,7 @@ body {
 
 .buttons:active {
     background-color:  rgb(118, 108, 126);
+    border: .5rem solid rgb(118, 108, 126);
 }
 
 img {
