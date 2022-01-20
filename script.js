@@ -44,20 +44,9 @@ getEventListeners = () => {
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
     );
     buttonsMath.forEach((buttonMath => 
-        buttonMath.addEventListener("click", () => {
-            if (!operand1) operand1 = Number(operationsP.textContent)
-            else if (!operand2) operand2 = Number(operationsP.textContent);
-            else if (operand1 && operand2) {
-                operand1 = operand2;
-                operand2 = Number(operationsP.textContent);
-            }
-            console.log(operand1, " 2- >", operand2);
-            operator = buttonMath.textContent;
-            writeVisorNumber(buttonMath.textContent);
-            writeOperand(buttonMath.textContent);
-            visorClean();
-        })
-    ));
+        buttonMath.addEventListener("click", () => getOperands(buttonMath.textContent))
+        ));
+
     operate = document.querySelector(".operate");
     operate.addEventListener("click", () => console.log("FUUUUUUUUCK"));
 }
@@ -81,22 +70,24 @@ writeResult = (number) => {
     const stringResult = number.toString().length;
     stringResult > 15? alert ("Exceeded maximum of 15 numbers") : historyP.textContent = number;
 }
-writeOperand = () => {
+writeVisorOperand = () => {
     placeholderP.textContent = operationsP.textContent;
 }
-storeOperands = () => {
-    if (!operand1) operand1 = Number(operationsP.textContent)
-            else if (!operand2) operand2 = Number(operationsP.textContent);
-            else if (operand1 && operand2) {
-                operand1 = operand2;
-                operand2 = Number(operationsP.textContent);
-            }
-            console.log(operand1, " 2- >", operand2);
-            operator = buttonMath.textContent;
-            writeVisorNumber(buttonMath.textContent);
-            writeOperand(buttonMath.textContent);
-            visorClean();
-}
+getOperands = (button) => {
+        if (!operand1) operand1 = Number(operationsP.textContent)
+        else if (!operand2) operand2 = Number(operationsP.textContent);
+        else if (operand1 && operand2) {
+            operand1 = operand2;
+            operand2 = Number(operationsP.textContent);
+        }
+        console.log({operand1}, {operand2});
+        operator = button;
+        writeVisorNumber(button);
+        writeVisorOperand(button);
+        visorClean();
+        //operate//
+    }
+
 
 // function activators //
 getEventListeners();
