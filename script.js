@@ -5,6 +5,7 @@ const buttons = document.querySelectorAll("[data-number]");
 const buttonsMath = document.querySelectorAll(".buttonsMath");
 const operationsP = document.querySelector("#operationsP");
 const historyP = document.querySelector("#historyP");
+const placeholderP = document.querySelector("#operandPlacegolder");
 
 let operator = ""; // math operator
 let operand1 = "";
@@ -26,6 +27,7 @@ fullVisorClean = () => {
     operationsP.textContent = ".";
     addBlinking(operationsP);
     historyP.textContent = "";
+    placeholderP.textContent = "";
 }
 visorClean = () => {
     operationsP.textContent = ".";
@@ -63,11 +65,14 @@ addBlinking = () => {
 writeVisorNumber = (number) => {
     if (operationsP.textContent === '.') operationsP.textContent="";
     operationsP.setAttribute("class", "visorP");
-    operationsP.textContent.toString().length <= 10? operationsP.textContent += number : alert ("10 number maximum exceeded");
+    operationsP.textContent.toString().length <= 15? operationsP.textContent += number : ("Exceeded maximum of 15 numbers");
 }
 writeResult = (number) => {
     const stringResult = number.toString().length;
-    stringResult > 10? alert ("Exceeded maximum limit of 10 numbers as result") : historyP.textContent = number;
+    stringResult > 15? alert ("Exceeded maximum of 15 numbers") : historyP.textContent = number;
+}
+writeOperand = () => {
+    placeholderP.textContent = operationsP.textContent;
 }
 
 

@@ -37,8 +37,8 @@ body {
     display: flex;
     align-self:flex-end;
     font-weight: bold;
-    font-size: 3.3rem;
-    padding: 1rem;
+    font-size: 2.4rem;
+    padding: .5rem;
     height: 10rem;
 }
 
@@ -48,8 +48,8 @@ body {
     display: flex;
     align-self:flex-end;
     font-weight: bold;
-    font-size: 3.3rem;
-    padding: 1rem;
+    font-size: 2.4rem;
+    padding: .5rem;
     height: 10rem;
     animation: blinker 1s step-start infinite;
     -webkit-animation: blinker 1s step-start infinite;
