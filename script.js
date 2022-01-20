@@ -12,17 +12,27 @@ let operand1 = "";
 let operand2 = "";
 let result = ""; // return result
 
-
-function operate () {
-    add = (a, b) => (a + b);
-    subtract = (a, b) => (a - b);
-    multiply = (a, b) => (a * b);
-    power = (a, b) => Math.pow(a, b);
-    factorial = (n) => {
-        if (n === 0) return 1; else return n * factorial (n -1);
-    };
-    divide = (a, b) => {if (b === 0) alert ("Nice try!"); else return a / b};
-}
+operate = (a, b, operator) => {
+    a = operand1;
+    b = operand2;
+    switch (operator) {
+        case '+':
+            return  (a + b);
+        case '-': 
+            return (a - b);
+        case "X": 
+            return (a * b);
+        case "EXP":
+            return Math.pow(a, b);
+        /* factorial = (n) => {
+            if (n === 0) return 1; else return n * factorial (n -1);
+        };*/
+        case "÷":
+            if (b === 0) alert ("Nice try!") 
+            else return a / b;
+        break;
+    }
+};
 fullVisorClean = () => {
     operationsP.textContent = ".";
     addBlinking(operationsP);
@@ -47,8 +57,8 @@ getEventListeners = () => {
         buttonMath.addEventListener("click", () => getOperands(buttonMath.textContent))
         ));
 
-    operate = document.querySelector(".operate");
-    operate.addEventListener("click", () => console.log("FUUUUUUUUCK"));
+    operateBtn = document.querySelector(".operate");
+    operateBtn.addEventListener("click", () => console.log("FUUUUUUUUCK"));
 }
 stopBlinking = () => {
     const visorPBlink = document.querySelector(".visorPBlink")
@@ -80,12 +90,14 @@ getOperands = (button) => {
             operand1 = operand2;
             operand2 = Number(operationsP.textContent);
         }
-        console.log({operand1}, {operand2});
         operator = button;
         writeVisorNumber(button);
         writeVisorOperand(button);
         visorClean();
-        //operate//
+        console.log({operand1}, {operand2}, operator)
+        result = operate(operand1, operand2, operator)
+        historyP.textContent = `${result}`;
+
     }
 
 
