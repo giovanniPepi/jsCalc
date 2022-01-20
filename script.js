@@ -19,15 +19,15 @@ if (n === 0) return 1; else return n * factorial (n -1);
 divide = (a, b) => {if (b === 0) alert ("Nice try!"); else return a / b};
 
 fullVisorClean = () => {
-    operationsP.textContent = "";
+    operationsP.textContent = ".";
+    addBlinking(operationsP);
     historyP.textContent = "";
 };
 visorClean = () => {
-    operationsP.textContent = "";
+    operationsP.textContent = ".";
+    addBlinking(operationsP);
 }
 getEventListeners = () => {
-    window.addEventListener("click", stopBlinking);
-
     const acBtn = document.querySelector("#acBtn");
     acBtn.addEventListener("click", fullVisorClean);
 
@@ -37,15 +37,25 @@ getEventListeners = () => {
     buttons.forEach((button) => 
         button.addEventListener("click", () => processNumber(button.textContent))
     );
+
 }
-    stopBlinking = () => {
+stopBlinking = () => {
     const visorPBlink = document.querySelector(".visorPBlink")
     if (visorPBlink) visorPBlink.setAttribute("class", 'visorP');
 }
-function processNumber (number) {
-    if (operationsP.textContent === '.') visorClean();
+addBlinking = (operationsP) => {
+    operationsP.setAttribute("class", 'visorPBlink');
+}
+addBlinking = () => {
+    const visorPBlink = document.querySelector("#operationsP");  
+    visorPBlink.setAttribute("class", "visorPBlink");
+}
+processNumber = (number) => {
+    if (operationsP.textContent === '.') operationsP.textContent="";
+    operationsP.setAttribute("class", "visorP");
     operationsP.textContent.toString().length <= 10? operationsP.textContent += number : alert ("10 number maximum exceeded");
 }
+
 
 
 
