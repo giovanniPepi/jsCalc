@@ -43,13 +43,16 @@ getEventListeners = () => {
     buttons.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
     );
-
     buttonsMath.forEach((buttonMath => 
         buttonMath.addEventListener("click", () => {
             operator = buttonMath.textContent;
             writeVisorNumber(buttonMath.textContent);
+            writeOperand(buttonMath.textContent);
+            visorClean();
         })
     ));
+    operate = document.querySelector(".operate");
+    operate.addEventListener("click", () => console.log("FUUUUUUUUCK"));
 }
 stopBlinking = () => {
     const visorPBlink = document.querySelector(".visorPBlink")

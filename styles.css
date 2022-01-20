@@ -74,7 +74,7 @@ body {
     align-items: center;
 }
 
-.buttons, .buttonsFunc, .buttonsMath {
+.buttons, .buttonsFunc, .buttonsMath, .operate {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -98,17 +98,17 @@ body {
     color:rgb(200, 200, 200);
 }
 
-.buttonsFunc:active, .buttonsMath:active {
+.buttonsFunc:active {
     background-color: rgb(230, 59, 81);
     border: .5rem solid rgb(230, 59, 81);
     color:rgb(200, 200, 200);
 }
 
-.buttons:hover, .buttonsMath:hover {
+.buttons:hover, .buttonsMath:hover, .operate:hover {
     background-color:  rgb(156, 150, 160);
 }
 
-.buttons:active .buttonsMath:active {
+.buttons:active, .buttonsMath:active, .operate:active {
     background-color:  rgb(118, 108, 126);
     border: .5rem solid rgb(118, 108, 126);
 }
