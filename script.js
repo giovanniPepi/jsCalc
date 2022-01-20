@@ -8,8 +8,7 @@ const historyP = document.querySelector("#historyP");
 const placeholderP = document.querySelector("#operandPlacegolder");
 
 let operator = ""; // math operator
-let operand1 = "";
-let operand2 = "";
+let operands = [];
 let result = ""; // return result
 
 
@@ -45,17 +44,13 @@ getEventListeners = () => {
     );
     buttonsMath.forEach((buttonMath => 
         buttonMath.addEventListener("click", () => {
-            if (!operand1) operand1 = Number(operationsP.textContent)
-            else if (!operand2) operand2 = Number(operationsP.textContent);
-            else if (operand1 && operand2) {
-                operand1 = operand2;
-                operand2 = Number(operationsP.textContent);
-            }
-            console.log(operand1, " 2- >", operand2);
+            if(operationsP.textContent !== ".") {
+            operands.push(Number(operationsP.textContent));
             operator = buttonMath.textContent;
             writeVisorNumber(buttonMath.textContent);
             writeOperand(buttonMath.textContent);
             visorClean();
+            };
         })
     ));
     operate = document.querySelector(".operate");
@@ -84,19 +79,7 @@ writeResult = (number) => {
 writeOperand = () => {
     placeholderP.textContent = operationsP.textContent;
 }
-storeOperands = () => {
-    if (!operand1) operand1 = Number(operationsP.textContent)
-            else if (!operand2) operand2 = Number(operationsP.textContent);
-            else if (operand1 && operand2) {
-                operand1 = operand2;
-                operand2 = Number(operationsP.textContent);
-            }
-            console.log(operand1, " 2- >", operand2);
-            operator = buttonMath.textContent;
-            writeVisorNumber(buttonMath.textContent);
-            writeOperand(buttonMath.textContent);
-            visorClean();
-}
+
 
 // function activators //
 getEventListeners();
