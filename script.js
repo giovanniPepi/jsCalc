@@ -6,9 +6,11 @@ const buttonsMath = document.querySelectorAll(".buttonsMath");
 const operationsP = document.querySelector("#operationsP");
 const historyP = document.querySelector("#historyP");
 
-let inputOperation = "";
-let result = "";
-let operation = "";
+let operator = ""; // math operator
+let operand1 = "";
+let operand2 = "";
+let result = ""; // return result
+
 
 function operate () {
     add = (a, b) => (a + b);
@@ -20,7 +22,6 @@ function operate () {
     };
     divide = (a, b) => {if (b === 0) alert ("Nice try!"); else return a / b};
 }
-
 fullVisorClean = () => {
     operationsP.textContent = ".";
     addBlinking(operationsP);
@@ -35,16 +36,17 @@ getEventListeners = () => {
     acBtn.addEventListener("click", fullVisorClean);
 
     cBtn = document.querySelector("#cBtn");
-    console.log(cBtn);
-
     cBtn.addEventListener("click", visorClean);
 
     buttons.forEach((button) => 
-        button.addEventListener("click", () => processNumber(button.textContent))
+        button.addEventListener("click", () => writeVisorNumber(button.textContent))
     );
 
     buttonsMath.forEach((buttonMath => 
-        buttonMath.addEventListener("click", () => console.log(buttonMath.textContent))
+        buttonMath.addEventListener("click", () => {
+            operator = buttonMath.textContent;
+            writeVisorNumber(buttonMath.textContent);
+        })
     ));
 }
 stopBlinking = () => {
@@ -58,12 +60,15 @@ addBlinking = () => {
     const visorPBlink = document.querySelector("#operationsP");  
     visorPBlink.setAttribute("class", "visorPBlink");
 }
-processNumber = (number) => {
+writeVisorNumber = (number) => {
     if (operationsP.textContent === '.') operationsP.textContent="";
     operationsP.setAttribute("class", "visorP");
     operationsP.textContent.toString().length <= 10? operationsP.textContent += number : alert ("10 number maximum exceeded");
 }
-
+writeResult = (number) => {
+    const stringResult = number.toString().length;
+    stringResult > 10? alert ("Exceeded maximum limit of 10 numbers as result") : historyP.textContent = number;
+}
 
 
 // function activators //
