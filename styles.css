@@ -95,6 +95,7 @@ body {
     font-weight: bold;
     border: .5rem solid rgb(156, 150, 160);
     border-radius: 1rem;
+    transition: all 0.1s ease-in-out;
 }
 
 .buttonsFunc {
@@ -121,6 +122,13 @@ body {
     background-color:  rgb(118, 108, 126);
     border: .5rem solid rgb(118, 108, 126);
 }
+
+.activeNm {
+    transform: scale(1.05);
+    background-color:  rgb(118, 108, 126);
+    border: .5rem solid rgb(118, 108, 126);
+}
+
 
 img {
     height: 100%;

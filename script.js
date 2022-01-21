@@ -11,6 +11,9 @@ let operand2 = '';
 let shouldRefreshScreen = false;
 
 getEventListeners = () => {
+    window.addEventListener('keydown', processKeyboardInpt);
+    window.addEventListener('keyup', removeStuckTransition);
+    
     cBtn = document.querySelector("#acBtn");
     acBtn.addEventListener("click", fullVisorClean);
 
@@ -20,6 +23,8 @@ getEventListeners = () => {
     numBtn.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
     );
+    
+    numBtn.forEach(num => num.addEventListener("transitionend", removeTransition));
     
     operatBtn.forEach((btn => btn.addEventListener("click", () => setOperation(btn.textContent))
     ));
@@ -31,9 +36,7 @@ getEventListeners = () => {
     delBtn.addEventListener("click", delNumber);
 
     pointBtn = document.querySelector("#point")
-    pointBtn.addEventListener("click", insertPoint);
-
-    window.addEventListener('keydown', processKeyboardInpt);
+    pointBtn.addEventListener("click", insertPoint);    
 }
 stopBlinking = () => {
     currentVisor.setAttribute("class", 'visorP');
@@ -115,7 +118,10 @@ function delNumber () {
     
 }
 function processKeyboardInpt (e) {
-    if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
+    if (e.key >= 0 && e.key <=9) {
+        writeVisorNumber(e.key);
+        getKeyCode(e);
+    }
     if (convertLower(e.key) === "c" || e.key === "Escape") fullVisorClean();
     if (e.key === "Enter") evaluate();
     if (e.key === "Backspace") delNumber();
@@ -123,6 +129,31 @@ function processKeyboardInpt (e) {
     if (e.key === ",") insertPoint();
     if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || convertLower(e.key) === "e") setOperation(processKeyboardOperator(e.key));
 }
+
+function getKeyCode (e) {
+    if (e.keyCode === 49 || e.keyCode === 97) simulateBtnClick(1);
+}
+function simulateBtnClick (number) {
+    let btnToPress = '';
+    switch (number) {
+        case 1:                                     
+            console.log('switch ativado');                                        
+            btnToPress = document.querySelector(`.buttons[data-number="${number}"]`).classList.add('activeNm');
+            //btnToPress = document.getElementById("1").classList.add('activeNm');           
+    }
+}
+function removeTransition() {
+    this.classList.remove('activeNm');
+}
+
+function removeStuckTransition () {
+    toRemove = document.querySelectorAll(".activeNm");
+    toRemove.forEach(remove => remove.classList.remove('activeNm'));
+}
+
+
+
+
 function processKeyboardOperator (keyOp) {
     if (keyOp === '+') return "+";
     if (keyOp === '-') return "-";
