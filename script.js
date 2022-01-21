@@ -1,12 +1,11 @@
 const body = document.querySelector("body");
 const container = document.querySelector(".container")
-
 const numBtn = document.querySelectorAll("[data-number]");
 const operatBtn = document.querySelectorAll(".operatBtn");
 const currentVisor = document.querySelector("#currentVisor");
 const resultP = document.querySelector("#resultP");
 
-let operationMode = null; // math operator
+let operationMode = null;
 let operand1 = '';
 let operand2 = '';
 let shouldRefreshScreen = false;
@@ -53,6 +52,9 @@ getEventListeners = () => {
     evaluateBtn = document.querySelector(".evaluate");
     evaluateBtn.addEventListener("click", () => evaluate());
 
+    delBtn = document.querySelector("#delBtn");
+    delBtn.addEventListener("click", delNumber);
+
     window.addEventListener('keydown', processKeyboardInpt);
 }
 function writeVisorNumber (number) {
@@ -98,18 +100,19 @@ function getMath (a, b, operator) {
 function round(number) {
     return Math.round(number*1000000000000000) / 1000000000000000;
 }
-
 function convertLower (e) {
     return e.toLowerCase();
 }
-
+function delNumber () {
+    currentVisor.textContent = currentVisor.textContent.toString().slice(0, -1);
+}
 function processKeyboardInpt (e) {
     if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
     if (convertLower(e.key) === "c" || e.key === "Escape") fullVisorClean();
     if (e.key === "Enter") evaluate();
+    if (e.key === "Backspace") delNumber();
     if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || convertLower(e.key) === "e") setOperation(processKeyboardOperator(e.key));
 }
-
 function processKeyboardOperator (keyOp) {
     if (keyOp === '+') return "+";
     if (keyOp === '-') return "-";
@@ -118,6 +121,7 @@ function processKeyboardOperator (keyOp) {
     if (convertLower(keyOp) === "e") return "EXP";
 }
 
-///
+
+
 
 getEventListeners();
