@@ -4,22 +4,26 @@ const numBtn = document.querySelectorAll("[data-number]");
 const operatBtn = document.querySelectorAll(".operatBtn");
 const currentVisor = document.querySelector("#currentVisor");
 const resultP = document.querySelector("#resultP");
-
 let operationMode = null;
 let operand1 = '';
 let operand2 = '';
 let shouldRefreshScreen = false;
 
 getEventListeners = () => {
+    window.addEventListener('keydown', processKeyboardInpt);
+    window.addEventListener('keyup', removeStuckTransition);
+   
     cBtn = document.querySelector("#acBtn");
     acBtn.addEventListener("click", fullVisorClean);
 
-    cBtn = document.querySelector("#cBtn");
+    cBtn = document.querySelector("#delBtn");
     cBtn.addEventListener("click", visorCleanBlink);
 
     numBtn.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
     );
+    
+    numBtn.forEach(num => num.addEventListener("transitionend", removeTransition));
     
     operatBtn.forEach((btn => btn.addEventListener("click", () => setOperation(btn.textContent))
     ));
@@ -31,9 +35,7 @@ getEventListeners = () => {
     delBtn.addEventListener("click", delNumber);
 
     pointBtn = document.querySelector("#point")
-    pointBtn.addEventListener("click", insertPoint);
-
-    window.addEventListener('keydown', processKeyboardInpt);
+    pointBtn.addEventListener("click", insertPoint);    
 }
 stopBlinking = () => {
     currentVisor.setAttribute("class", 'visorP');
@@ -60,7 +62,6 @@ visorClean = () => {
     addBlinking(currentVisor);
     shouldRefreshScreen = false;
 }
-
 function writeVisorNumber (number) {
     if (currentVisor.textContent === '...' || shouldRefreshScreen) visorClean();
     stopBlinking();
@@ -122,6 +123,39 @@ function processKeyboardInpt (e) {
     if (e.key === ".") insertPoint();
     if (e.key === ",") insertPoint();
     if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || convertLower(e.key) === "e") setOperation(processKeyboardOperator(e.key));
+    getKeyCode(e)
+}
+function getKeyCode (e) {
+    console.log(e.keyCode);
+    if (e.keyCode === 49 || e.keyCode === 97) simulateBtnClick(1);
+    else if (e.keyCode === 98 || e.keyCode === 50) simulateBtnClick(2);
+    else if (e.keyCode === 51 || e.keyCode === 99) simulateBtnClick(3);
+    else if (e.keyCode === 52 || e.keyCode === 100) simulateBtnClick(4);
+    else if (e.keyCode === 53 || e.keyCode === 101) simulateBtnClick(5);
+    else if (e.keyCode === 54 || e.keyCode === 102) simulateBtnClick(6);
+    else if (e.keyCode === 55 || e.keyCode === 103) simulateBtnClick(7);
+    else if (e.keyCode === 56 || e.keyCode === 104) simulateBtnClick(8);
+    else if (e.keyCode === 57 || e.keyCode === 105) simulateBtnClick(9);
+    else if (e.keyCode === 48 || e.keyCode === 96) simulateBtnClick(0);
+    else if (e.keyCode === 106 || e.keyCode === 88) simulateBtnClick('*');
+    else if (e.keyCode === 191 || e.keyCode === 111) simulateBtnClick('/');
+    else if (e.keyCode === 190 || e.keyCode === 110) simulateBtnClick('.');
+    else if (e.keyCode === 67) simulateBtnClick('c');
+    else if (e.keyCode === 69) simulateBtnClick('e');
+    else if (e.keyCode === 61 || e.keyCode === 187) simulateBtnClick('='); 
+    else if (e.keyCode === 107) simulateBtnClick('+');
+    else if (e.keyCode === 109 || e.keyCode === 173) simulateBtnClick('-');
+    else if (e.keyCode === 65) simulateBtnClick('a');
+}
+function simulateBtnClick (number) {                                        
+    btnToPress = document.querySelector(`[data-number="${number}"]`).classList.add('activeNm');    
+}
+function removeTransition() {
+    this.classList.remove('activeNm');
+}
+function removeStuckTransition () {
+    toRemove = document.querySelectorAll(".activeNm");
+    toRemove.forEach(remove => remove.classList.remove('activeNm'));
 }
 function processKeyboardOperator (keyOp) {
     if (keyOp === '+') return "+";
@@ -137,8 +171,4 @@ function insertPoint () {
     if (currentVisor.textContent.includes(".")) return;
     writeVisorNumber(".");
 }
-
-
-
-
 getEventListeners();
