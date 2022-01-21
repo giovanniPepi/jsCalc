@@ -129,23 +129,25 @@ function processKeyboardInpt (e) {
     if (e.key === ",") insertPoint();
     if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || convertLower(e.key) === "e") setOperation(processKeyboardOperator(e.key));
 }
-
 function getKeyCode (e) {
     if (e.keyCode === 49 || e.keyCode === 97) simulateBtnClick(1);
+    else if (e.keyCode === 98 || e.keyCode === 50) simulateBtnClick(2);
+    else if (e.keyCode === 51 || e.keyCode === 99) simulateBtnClick(3);
+    else if (e.keyCode === 52 || e.keyCode === 100) simulateBtnClick(4);
+    else if (e.keyCode === 53 || e.keyCode === 101) simulateBtnClick(5);
+    else if (e.keyCode === 54 || e.keyCode === 102) simulateBtnClick(6);
+    else if (e.keyCode === 55 || e.keyCode === 103) simulateBtnClick(7);
+    else if (e.keyCode === 56 || e.keyCode === 104) simulateBtnClick(8);
+    else if (e.keyCode === 57 || e.keyCode === 105) simulateBtnClick(9);
+    else if (e.keyCode === 48 || e.keyCode === 96) simulateBtnClick(0);
 }
 function simulateBtnClick (number) {
-    let btnToPress = '';
-    switch (number) {
-        case 1:                                     
-            console.log('switch ativado');                                        
-            btnToPress = document.querySelector(`.buttons[data-number="${number}"]`).classList.add('activeNm');
-            //btnToPress = document.getElementById("1").classList.add('activeNm');           
-    }
+    console.log('switch ativado: ', number);                                        
+    btnToPress = document.querySelector(`.buttons[data-number="${number}"]`).classList.add('activeNm');    
 }
 function removeTransition() {
     this.classList.remove('activeNm');
 }
-
 function removeStuckTransition () {
     toRemove = document.querySelectorAll(".activeNm");
     toRemove.forEach(remove => remove.classList.remove('activeNm'));
