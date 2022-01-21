@@ -96,6 +96,11 @@ body {
     border: .5rem solid rgb(156, 150, 160);
     border-radius: 1rem;
     transition: all 0.1s ease-in-out;
+    flex-shrink: 1;
+}
+
+#evaluate {
+    width: 8rem;
 }
 
 .buttonsFunc {

@@ -17,7 +17,7 @@ getEventListeners = () => {
     cBtn = document.querySelector("#acBtn");
     acBtn.addEventListener("click", fullVisorClean);
 
-    cBtn = document.querySelector("#cBtn");
+    cBtn = document.querySelector("#delBtn");
     cBtn.addEventListener("click", visorCleanBlink);
 
     numBtn.forEach((button) => 
@@ -118,16 +118,14 @@ function delNumber () {
     
 }
 function processKeyboardInpt (e) {
-    if (e.key >= 0 && e.key <=9) {
-        writeVisorNumber(e.key);
-        getKeyCode(e);
-    }
+    if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
     if (convertLower(e.key) === "c" || e.key === "Escape") fullVisorClean();
     if (e.key === "Enter") evaluate();
     if (e.key === "Backspace") delNumber();
     if (e.key === ".") insertPoint();
     if (e.key === ",") insertPoint();
     if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || convertLower(e.key) === "e") setOperation(processKeyboardOperator(e.key));
+    getKeyCode(e)
 }
 function getKeyCode (e) {
     if (e.keyCode === 49 || e.keyCode === 97) simulateBtnClick(1);
@@ -140,10 +138,18 @@ function getKeyCode (e) {
     else if (e.keyCode === 56 || e.keyCode === 104) simulateBtnClick(8);
     else if (e.keyCode === 57 || e.keyCode === 105) simulateBtnClick(9);
     else if (e.keyCode === 48 || e.keyCode === 96) simulateBtnClick(0);
+    else if (e.keyCode === 106 || e.keyCode === 88) simulateBtnClick('*');
+    else if (e.keyCode === 191 || e.keyCode === 111) simulateBtnClick('/');
+    else if (e.keyCode === 190 || e.keyCode === 110) simulateBtnClick('.');
+    else if (e.keyCode === 67) simulateBtnClick('c');
+    else if (e.keyCode === 69) simulateBtnClick('e');
+    else if (e.keyCode === 61) simulateBtnClick('=');
+    else if (e.keyCode === 107 || e.keyCode === 61) simulateBtnClick('+');
+    else if (e.keyCode === 109 || e.keyCode === 173) simulateBtnClick('-');
+    else if (e.keyCode === 65) simulateBtnClick('a');
 }
-function simulateBtnClick (number) {
-    console.log('switch ativado: ', number);                                        
-    btnToPress = document.querySelector(`.buttons[data-number="${number}"]`).classList.add('activeNm');    
+function simulateBtnClick (number) {                                        
+    btnToPress = document.querySelector(`[data-number="${number}"]`).classList.add('activeNm');    
 }
 function removeTransition() {
     this.classList.remove('activeNm');
