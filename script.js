@@ -5,38 +5,36 @@ const buttons = document.querySelectorAll("[data-number]");
 const buttonsMath = document.querySelectorAll(".buttonsMath");
 const operationsP = document.querySelector("#operationsP");
 const historyP = document.querySelector("#historyP");
-const placeholderP = document.querySelector("#operandPlacegolder");
 
 let operator = ""; // math operator
-let operands = [];
+let operand1 = '';
+let operand2 = '';
 let result = ""; // return result
 
 operate = (a, b, operator) => {
-    a = operand1;
-    b = operand2;
     switch (operator) {
         case '+':
-            return  (a + b);
+            results = (a + b);
         case '-': 
-            return (a - b);
+            results =  (a - b);
         case "X": 
-            return (a * b);
+            results =  (a * b);
         case "EXP":
-            return Math.pow(a, b);
+            results =  Math.pow(a, b);
         /* factorial = (n) => {
             if (n === 0) return 1; else return n * factorial (n -1);
         };*/
         case "÷":
             if (b === 0) alert ("Nice try!") 
-            else return a / b;
+            else results = a / b;
         break;
     }
+    console.log(results);
 };
 fullVisorClean = () => {
     operationsP.textContent = ".";
     addBlinking(operationsP);
     historyP.textContent = "";
-    placeholderP.textContent = "";
 }
 visorClean = () => {
     operationsP.textContent = ".";
@@ -52,12 +50,8 @@ getEventListeners = () => {
     buttons.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
     );
-    buttonsMath.forEach((buttonMath => 
-        buttonMath.addEventListener("click", () => getOperands(buttonMath.textContent))
+    buttonsMath.forEach((buttonMath => buttonMath.addEventListener("click", () => getOperands(buttonMath.textContent))
         ));
-    
-    buttonsMath.forEach((buttonMath => buttonMath.addEventListener("click", () => getOperator(buttonMath))
-    ));
 
     operateBtn = document.querySelector(".operate");
     operateBtn.addEventListener("click", () => console.log("FUUUUUUUUCK"));
@@ -82,28 +76,41 @@ writeResult = (number) => {
     const stringResult = number.toString().length;
     stringResult > 15? alert ("Exceeded maximum of 15 numbers") : historyP.textContent = number;
 }
-writeVisorOperand = () => {
-    placeholderP.textContent = operationsP.textContent;
-}
-getOperands = (button) => { 
-    console.log({operand1}, {operand2}, operator)
-        if (!operand1) operand1 = Number(operationsP.textContent)
-        else if (!operand2) operand2 = Number(operationsP.textContent);
-        else if (operand1 && operand2) {
-            operand1 = operand2;
-            operand2 = Number(operationsP.textContent);
-        }        
-        writeVisorNumber(button);
-        writeVisorOperand(operator);
-        visorClean();
-        
-        result = operate(operand1, operand2, operator)
-        historyP.textContent = `${result}`;
-    }
 
-getOperator = (buttonMath) => {
-    operator = buttonMath.textContent;
-}    
+getOperands = (operand) => {
+    if (operand1 == '') {
+        operand1 = Number(operationsP.textContent);
+        console.log(operand1, 'operand 1');
+    } else if (operand2 == ''){
+        operand2 = Number(operationsP.textContent);
+        console.log(operand2, 'operand 2');
+    } else {
+        operand1 = operand2; 
+        operand2 = Number(operationsP.textContent);
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // function activators //
 getEventListeners();
