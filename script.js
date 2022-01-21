@@ -26,20 +26,16 @@ fullVisorClean = () => {
     operationMode = null;
     shouldRefreshScreen = false;
 }
-
 visorCleanBlink = () => {
     currentVisor.textContent = ".";
     addBlinking(currentVisor);
     shouldRefreshScreen = false;
 }
-
 visorClean = () => {
     currentVisor.textContent = "";
     addBlinking(currentVisor);
     shouldRefreshScreen = false;
 }
-
-
 getEventListeners = () => {
     const acBtn = document.querySelector("#acBtn");
     acBtn.addEventListener("click", fullVisorClean);
@@ -57,13 +53,11 @@ getEventListeners = () => {
     evaluateBtn = document.querySelector(".evaluate");
     evaluateBtn.addEventListener("click", () => evaluate());
 }
-
 function writeVisorNumber (number) {
     if (currentVisor.textContent === '.' || shouldRefreshScreen) visorClean();
     stopBlinking();
     currentVisor.textContent += number;
 }
-
 function setOperation (operator){
     if (operationMode !== null) evaluate();
     if (currentVisor.textContent !== ".") operand1 = currentVisor.textContent;
@@ -71,11 +65,10 @@ function setOperation (operator){
     resultP.textContent = `${operand1} ${operationMode}`;
     shouldRefreshScreen = true;
 }
-
 function evaluate () {
     if (shouldRefreshScreen || operationMode === null) return;
     operand2 = currentVisor.textContent; 
-    currentVisor.textContent = getMath(operand1, operand2, operationMode);
+    currentVisor.textContent = round(getMath(operand1, operand2, operationMode));
     resultP.textContent = `${operand1} ${operationMode} ${operand2} = ` ;
     if (operand2 == 0 && operationMode === "÷") {
         alert("Division by 0 is not possible");
@@ -83,7 +76,6 @@ function evaluate () {
     }
     operationMode = null;
 }
-
 function getMath (a, b, operator) {
     a = Number(a);
     b = Number(b);
@@ -105,6 +97,9 @@ function getMath (a, b, operator) {
             else return a / b;
     }
 };
+function round(number) {
+    return Math.round(number*1000000000000000) / 1000000000000000;
+}
 
 
 
