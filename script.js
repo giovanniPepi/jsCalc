@@ -8,8 +8,7 @@ const historyP = document.querySelector("#historyP");
 const placeholderP = document.querySelector("#operandPlacegolder");
 
 let operator = ""; // math operator
-let operand1 = "";
-let operand2 = "";
+let operands = [];
 let result = ""; // return result
 
 operate = (a, b, operator) => {
