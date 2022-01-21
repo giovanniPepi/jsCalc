@@ -52,6 +52,8 @@ getEventListeners = () => {
 
     evaluateBtn = document.querySelector(".evaluate");
     evaluateBtn.addEventListener("click", () => evaluate());
+
+    window.addEventListener('keydown', processKeyboardInpt);
 }
 function writeVisorNumber (number) {
     if (currentVisor.textContent === '.' || shouldRefreshScreen) visorClean();
@@ -79,7 +81,6 @@ function evaluate () {
 function getMath (a, b, operator) {
     a = Number(a);
     b = Number(b);
-
     switch (operator) {
         case '+':
             return (a + b);
@@ -89,9 +90,6 @@ function getMath (a, b, operator) {
             return (a * b);
         case "EXP":
             return Math.pow(a, b);
-        /* factorial = (n) => {
-            if (n === 0) return 1; else return n * factorial (n -1);
-        };*/
         case "÷":
             if (b === 0) return;
             else return a / b;
@@ -100,6 +98,26 @@ function getMath (a, b, operator) {
 function round(number) {
     return Math.round(number*1000000000000000) / 1000000000000000;
 }
+
+function convertLower (e) {
+    return e.toLowerCase();
+}
+
+function processKeyboardInpt (e) {
+    if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
+    if (convertLower(e.key) === "c" || e.key === "Escape") fullVisorClean();
+    if (e.key === "Enter") evaluate();
+    if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || convertLower(e.key) === "e") setOperation(processKeyboardOperator(e.key));
+}
+
+function processKeyboardOperator (keyOp) {
+    if (keyOp === '+') return "+";
+    if (keyOp === '-') return "-";
+    if (keyOp === '/') return "÷";
+    if (keyOp === '*') return "X";
+    if (convertLower(keyOp) === "e") return "EXP";
+}
+
 
 
 
