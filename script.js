@@ -1,6 +1,6 @@
 const body = document.querySelector("body");
 const container = document.querySelector(".container")
-const numBtn = document.querySelectorAll("[data-number]");
+const numBtn = document.querySelectorAll('.buttons');
 const operatBtn = document.querySelectorAll(".operatBtn");
 const currentVisor = document.querySelector("#currentVisor");
 const resultP = document.querySelector("#resultP");
@@ -9,21 +9,21 @@ let operand1 = '';
 let operand2 = '';
 let shouldRefreshScreen = false;
 
-getEventListeners = () => {
+getListeners = () => {
     window.addEventListener('keydown', processKeyboardInpt);
     window.addEventListener('keyup', removeStuckTransition);
-   
-    cBtn = document.querySelector("#acBtn");
+    
+    acBtn = document.querySelector("#acBtn");
     acBtn.addEventListener("click", fullVisorClean);
-
+    
     cBtn = document.querySelector("#delBtn");
     cBtn.addEventListener("click", visorCleanBlink);
 
     numBtn.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
     );
-    
-    numBtn.forEach(num => num.addEventListener("transitionend", removeTransition));
+
+    numBtn.forEach(num => num.addEventListener("transitionend", removeTransition));    
     
     operatBtn.forEach((btn => btn.addEventListener("click", () => setOperation(btn.textContent))
     ));
@@ -44,13 +44,11 @@ addBlinking = (currentVisor) => {
     currentVisor.setAttribute("class", 'visorPBlink');
 }
 fullVisorClean = () => {
-    currentVisor.textContent = "...";
-    addBlinking(currentVisor);
     resultP.textContent = "";
     operand1 = '';
     operand2 = '';
     operationMode = null;
-    shouldRefreshScreen = false;
+    visorCleanBlink();
 }
 visorCleanBlink = () => {
     currentVisor.textContent = "...";
@@ -117,7 +115,8 @@ function delNumber () {
 }
 function processKeyboardInpt (e) {
     if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
-    if (convertLower(e.key) === "c" || e.key === "Escape") fullVisorClean();
+    if (convertLower(e.key) === "c" || e.key === "Escape") visorCleanBlink();
+    if (convertLower(e.key) === 'a') fullVisorClean();
     if (e.key === "Enter") evaluate();
     if (e.key === "Backspace") delNumber();
     if (e.key === ".") insertPoint();
@@ -126,7 +125,6 @@ function processKeyboardInpt (e) {
     getKeyCode(e)
 }
 function getKeyCode (e) {
-    console.log(e.keyCode);
     if (e.keyCode === 49 || e.keyCode === 97) simulateBtnClick(1);
     else if (e.keyCode === 98 || e.keyCode === 50) simulateBtnClick(2);
     else if (e.keyCode === 51 || e.keyCode === 99) simulateBtnClick(3);
@@ -171,4 +169,5 @@ function insertPoint () {
     if (currentVisor.textContent.includes(".")) return;
     writeVisorNumber(".");
 }
-getEventListeners();
+
+getListeners();
