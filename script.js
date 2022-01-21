@@ -1,45 +1,16 @@
 const body = document.querySelector("body");
 const container = document.querySelector(".container")
 
-const buttons = document.querySelectorAll("[data-number]");
+const numBtn = document.querySelectorAll("[data-number]");
 const buttonsMath = document.querySelectorAll(".buttonsMath");
-const operationsP = document.querySelector("#operationsP");
-const historyP = document.querySelector("#historyP");
+const currentOperation = document.querySelector("#currentOperation");
+const resultP = document.querySelector("#resultP");
 
 let operator = ""; // math operator
 let operand1 = '';
 let operand2 = '';
-let result = ""; // return result
+let shouldRefreshScreen = false;
 
-operate = (a, b, operator) => {
-    switch (operator) {
-        case '+':
-            results = (a + b);
-        case '-': 
-            results =  (a - b);
-        case "X": 
-            results =  (a * b);
-        case "EXP":
-            results =  Math.pow(a, b);
-        /* factorial = (n) => {
-            if (n === 0) return 1; else return n * factorial (n -1);
-        };*/
-        case "÷":
-            if (b === 0) alert ("Nice try!") 
-            else results = a / b;
-        break;
-    }
-    console.log(results);
-};
-fullVisorClean = () => {
-    operationsP.textContent = ".";
-    addBlinking(operationsP);
-    historyP.textContent = "";
-}
-visorClean = () => {
-    operationsP.textContent = ".";
-    addBlinking(operationsP);
-}
 getEventListeners = () => {
     const acBtn = document.querySelector("#acBtn");
     acBtn.addEventListener("click", fullVisorClean);
@@ -47,51 +18,84 @@ getEventListeners = () => {
     cBtn = document.querySelector("#cBtn");
     cBtn.addEventListener("click", visorClean);
 
-    buttons.forEach((button) => 
+    numBtn.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
     );
-    buttonsMath.forEach((buttonMath => buttonMath.addEventListener("click", () => getOperands(buttonMath.textContent))
-        ));
-
+    buttonsMath.forEach((buttonMath => buttonMath.addEventListener("click", () => setOperator(buttonMath.textContent))
+    ));
     operateBtn = document.querySelector(".operate");
-    operateBtn.addEventListener("click", () => console.log("FUUUUUUUUCK"));
+    operateBtn.addEventListener("click", () => evaluate());
+}
+
+
+function evaluate () {
+    if (shouldRefreshScreen) return;
+    operand2 = currentOperation.textContent; 
+    currentOperation.textContent = getMath (operand1, operand2, operator);
+    resultP.textContent = `${operand1} ${operator} ${operand2} `;
+}
+
+function writeVisorNumber (number) {
+    if (currentOperation.textContent === '.' || shouldRefreshScreen) currentOperation.textContent = "";
+    stopBlinking();
+    currentOperation.textContent += number;
+}
+
+
+fullVisorClean = () => {
+    currentOperation.textContent = ".";
+    addBlinking(currentOperation);
+    resultP.textContent = "";
+    shouldRefreshScreen = false;
+}
+visorClean = () => {
+    currentOperation.textContent = ".";
+    addBlinking(currentOperation);
+    shouldRefreshScreen = false;
 }
 stopBlinking = () => {
     const visorPBlink = document.querySelector(".visorPBlink")
     if (visorPBlink) visorPBlink.setAttribute("class", 'visorP');
 }
-addBlinking = (operationsP) => {
-    operationsP.setAttribute("class", 'visorPBlink');
-}
-addBlinking = () => {
-    const visorPBlink = document.querySelector("#operationsP");  
-    visorPBlink.setAttribute("class", "visorPBlink");
-}
-writeVisorNumber = (number) => {
-    if (operationsP.textContent === '.') operationsP.textContent="";
-    operationsP.setAttribute("class", "visorP");
-    operationsP.textContent.toString().length <= 15? operationsP.textContent += number : ("Exceeded maximum of 15 numbers");
-}
-writeResult = (number) => {
-    const stringResult = number.toString().length;
-    stringResult > 15? alert ("Exceeded maximum of 15 numbers") : historyP.textContent = number;
-}
-
-getOperands = (operand) => {
-    if (operand1 == '') {
-        operand1 = Number(operationsP.textContent);
-        console.log(operand1, 'operand 1');
-    } else if (operand2 == ''){
-        operand2 = Number(operationsP.textContent);
-        console.log(operand2, 'operand 2');
-    } else {
-        operand1 = operand2; 
-        operand2 = Number(operationsP.textContent);
+addBlinking = (currentOperation) => {
+    currentOperation.setAttribute("class", 'visorPBlink');
+    addBlinking = () => {
+        const visorPBlink = document.querySelector("#currentOperation");  
+        visorPBlink.setAttribute("class", "visorPBlink");
     }
-    
+}
+
+function setOperator (op){
+    operator = op;
+    operand1 = currentOperation.textContent;
+    resultP.textContent = `${operand1} ${operator}`;
+    shouldRefreshScreen = true;
+    return operator;    
 }
 
 
+function getMath (a, b, operator) {
+    a = Number(a);
+    b = Number(b);
+
+    switch (operator) {
+        case '+':
+            return (a + b);
+        case '-': 
+            return (a - b);
+        case "X": 
+            return (a * b);
+        case "EXP":
+            return Math.pow(a, b);
+        /* factorial = (n) => {
+            if (n === 0) return 1; else return n * factorial (n -1);
+        };*/
+        case "÷":
+            if (b === 0) alert ("Nice try!") 
+            else return a / b;
+        break;
+    }
+};
 
 
 
@@ -104,13 +108,6 @@ getOperands = (operand) => {
 
 
 
+///
 
-
-
-
-
-
-
-
-// function activators //
 getEventListeners();
