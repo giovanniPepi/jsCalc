@@ -5,15 +5,15 @@ body {
     align-content: center;
     background: rgb(240, 240, 240);
     text-align: center;
-    margin: 2rem;
+    margin: 0;
+    padding: 2rem;
 }
 
 .container {
     background: rgb(72, 67, 87);
     border-radius: 2rem;
     padding: 1.4rem;
-    min-height: 45rem;
-    max-width: 32rem;
+    max-width: 26rem;
 }
 
 .logo {
@@ -25,43 +25,40 @@ body {
 .visor {
     background: rgb(173,171, 168);
     border-radius: 1rem;;
-    margin-bottom: 1rem;
-    min-height: 20rem;
+    margin-bottom: .8rem;
+    min-height: 10rem;
     display: flex;
     flex-direction: column;
-    max-width: 32rem;
+    max-width: 26rem;
     word-wrap: break-word;
     word-break: break-all;
-}
-
-#historyP {
-    font-size: 1.8rem;
+    justify-content: space-between; 
 }
 
 .visorP {
+    margin: .2rem;
     color: rgb(45, 45, 45);
-    margin: 1.5rem;
     display: flex;
-    align-self:flex-end;
     font-weight: bold;
-    font-size: 2.4rem;
+    font-size: 2rem;
     padding: .5rem;
-    min-height: 5rem;
+    min-height: 2rem;
     max-width: 29rem;    
     align-items: flex-end;
     justify-content: flex-end;
-    flex-wrap: wrap;    
 }
 
 .visorPBlink {
+    margin: .2rem;
     color: rgb(45, 45, 45);
-    margin: 1.5rem;
     display: flex;
-    align-self:flex-end;
     font-weight: bold;
-    font-size: 2.4rem;
+    font-size: 2rem;
     padding: .5rem;
-    min-height: 10rem;
+    min-height: 2rem;
+    max-width: 29rem;    
+    align-items: flex-end;
+    justify-content: flex-end;
     animation: blinker 1s step-start infinite;
     -webkit-animation: blinker 1s step-start infinite;
 }
@@ -79,20 +76,21 @@ body {
 
 .buttonContainer1, .buttonContainer2, 
 .buttonContainer3, .buttonContainer4 {
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: .1rem;
 }
 
 .buttons, .buttonsFunc, .operatBtn, .evaluate {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: .25rem;
+    margin: .2rem;
     padding: .5rem;
-    height: 4rem;
-    width: 4rem;
+    height: 3rem;
+    width: 3rem;
     color: rgb(225, 225, 225);
     font-weight: bold;
     border: .5rem solid rgb(156, 150, 160);

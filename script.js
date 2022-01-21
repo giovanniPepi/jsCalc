@@ -65,7 +65,7 @@ function setOperation (operator){
     if (currentVisor.textContent !== ".") operand1 = currentVisor.textContent;
     operationMode = operator;   
     resultP.textContent = `${operand1} ${operationMode}`;
-    shouldRefreshScreen = true;
+    visorClean();
 }
 function evaluate () {
     if (shouldRefreshScreen || operationMode === null) return;
@@ -117,18 +117,6 @@ function processKeyboardOperator (keyOp) {
     if (keyOp === '*') return "X";
     if (convertLower(keyOp) === "e") return "EXP";
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 ///
 
