@@ -10,33 +10,8 @@ let operand1 = '';
 let operand2 = '';
 let shouldRefreshScreen = false;
 
-stopBlinking = () => {
-    currentVisor.setAttribute("class", 'visorP');
-}
-addBlinking = (currentVisor) => {
-    currentVisor.setAttribute("class", 'visorPBlink');
-}
-fullVisorClean = () => {
-    currentVisor.textContent = ".";
-    addBlinking(currentVisor);
-    resultP.textContent = "";
-    operand1 = '';
-    operand2 = '';
-    operationMode = null;
-    shouldRefreshScreen = false;
-}
-visorCleanBlink = () => {
-    currentVisor.textContent = ".";
-    addBlinking(currentVisor);
-    shouldRefreshScreen = false;
-}
-visorClean = () => {
-    currentVisor.textContent = "";
-    addBlinking(currentVisor);
-    shouldRefreshScreen = false;
-}
 getEventListeners = () => {
-    const acBtn = document.querySelector("#acBtn");
+    cBtn = document.querySelector("#acBtn");
     acBtn.addEventListener("click", fullVisorClean);
 
     cBtn = document.querySelector("#cBtn");
@@ -55,16 +30,45 @@ getEventListeners = () => {
     delBtn = document.querySelector("#delBtn");
     delBtn.addEventListener("click", delNumber);
 
+    pointBtn = document.querySelector("#point")
+    pointBtn.addEventListener("click", insertPoint);
+
     window.addEventListener('keydown', processKeyboardInpt);
 }
+stopBlinking = () => {
+    currentVisor.setAttribute("class", 'visorP');
+}
+addBlinking = (currentVisor) => {
+    currentVisor.setAttribute("class", 'visorPBlink');
+}
+fullVisorClean = () => {
+    currentVisor.textContent = "..";
+    addBlinking(currentVisor);
+    resultP.textContent = "";
+    operand1 = '';
+    operand2 = '';
+    operationMode = null;
+    shouldRefreshScreen = false;
+}
+visorCleanBlink = () => {
+    currentVisor.textContent = "..";
+    addBlinking(currentVisor);
+    shouldRefreshScreen = false;
+}
+visorClean = () => {
+    currentVisor.textContent = "";
+    addBlinking(currentVisor);
+    shouldRefreshScreen = false;
+}
+
 function writeVisorNumber (number) {
-    if (currentVisor.textContent === '.' || shouldRefreshScreen) visorClean();
+    if (currentVisor.textContent === '..' || shouldRefreshScreen) visorClean();
     stopBlinking();
     currentVisor.textContent += number;
 }
 function setOperation (operator){
     if (operationMode !== null) evaluate();
-    if (currentVisor.textContent !== ".") operand1 = currentVisor.textContent;
+    if (currentVisor.textContent !== "..") operand1 = currentVisor.textContent;
     operationMode = operator;   
     resultP.textContent = `${operand1} ${operationMode}`;
     visorClean();
@@ -115,6 +119,8 @@ function processKeyboardInpt (e) {
     if (convertLower(e.key) === "c" || e.key === "Escape") fullVisorClean();
     if (e.key === "Enter") evaluate();
     if (e.key === "Backspace") delNumber();
+    if (e.key === ".") insertPoint();
+    if (e.key === ",") insertPoint();
     if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || convertLower(e.key) === "e") setOperation(processKeyboardOperator(e.key));
 }
 function processKeyboardOperator (keyOp) {
@@ -123,6 +129,13 @@ function processKeyboardOperator (keyOp) {
     if (keyOp === '/') return "÷";
     if (keyOp === '*') return "X";
     if (convertLower(keyOp) === "e") return "EXP";
+}
+function insertPoint () {
+    if (shouldRefreshScreen) visorClean();
+    if (currentVisor.textContent === "..")
+    currentVisor.textContent = 0;
+    if (currentVisor.textContent.includes(".")) return;
+    writeVisorNumber(".");
 }
 
 
