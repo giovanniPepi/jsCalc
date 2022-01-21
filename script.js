@@ -4,7 +4,6 @@ const numBtn = document.querySelectorAll("[data-number]");
 const operatBtn = document.querySelectorAll(".operatBtn");
 const currentVisor = document.querySelector("#currentVisor");
 const resultP = document.querySelector("#resultP");
-
 let operationMode = null;
 let operand1 = '';
 let operand2 = '';
@@ -63,7 +62,6 @@ visorClean = () => {
     addBlinking(currentVisor);
     shouldRefreshScreen = false;
 }
-
 function writeVisorNumber (number) {
     if (currentVisor.textContent === '...' || shouldRefreshScreen) visorClean();
     stopBlinking();
@@ -158,10 +156,6 @@ function removeStuckTransition () {
     toRemove = document.querySelectorAll(".activeNm");
     toRemove.forEach(remove => remove.classList.remove('activeNm'));
 }
-
-
-
-
 function processKeyboardOperator (keyOp) {
     if (keyOp === '+') return "+";
     if (keyOp === '-') return "-";
@@ -176,8 +170,4 @@ function insertPoint () {
     if (currentVisor.textContent.includes(".")) return;
     writeVisorNumber(".");
 }
-
-
-
-
 getEventListeners();
