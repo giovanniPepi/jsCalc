@@ -2,77 +2,87 @@ const body = document.querySelector("body");
 const container = document.querySelector(".container")
 
 const numBtn = document.querySelectorAll("[data-number]");
-const buttonsMath = document.querySelectorAll(".buttonsMath");
-const currentOperation = document.querySelector("#currentOperation");
+const operatBtn = document.querySelectorAll(".operatBtn");
+const currentVisor = document.querySelector("#currentVisor");
 const resultP = document.querySelector("#resultP");
 
-let operator = ""; // math operator
+let operationMode = null; // math operator
 let operand1 = '';
 let operand2 = '';
 let shouldRefreshScreen = false;
+
+stopBlinking = () => {
+    currentVisor.setAttribute("class", 'visorP');
+}
+addBlinking = (currentVisor) => {
+    currentVisor.setAttribute("class", 'visorPBlink');
+}
+fullVisorClean = () => {
+    currentVisor.textContent = ".";
+    addBlinking(currentVisor);
+    resultP.textContent = "";
+    operand1 = '';
+    operand2 = '';
+    operationMode = null;
+    shouldRefreshScreen = false;
+}
+
+visorCleanBlink = () => {
+    currentVisor.textContent = ".";
+    addBlinking(currentVisor);
+    shouldRefreshScreen = false;
+}
+
+visorClean = () => {
+    currentVisor.textContent = "";
+    addBlinking(currentVisor);
+    shouldRefreshScreen = false;
+}
+
 
 getEventListeners = () => {
     const acBtn = document.querySelector("#acBtn");
     acBtn.addEventListener("click", fullVisorClean);
 
     cBtn = document.querySelector("#cBtn");
-    cBtn.addEventListener("click", visorClean);
+    cBtn.addEventListener("click", visorCleanBlink);
 
     numBtn.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
     );
-    buttonsMath.forEach((buttonMath => buttonMath.addEventListener("click", () => setOperator(buttonMath.textContent))
+    
+    operatBtn.forEach((btn => btn.addEventListener("click", () => setOperation(btn.textContent))
     ));
-    operateBtn = document.querySelector(".operate");
-    operateBtn.addEventListener("click", () => evaluate());
-}
 
-
-function evaluate () {
-    if (shouldRefreshScreen) return;
-    operand2 = currentOperation.textContent; 
-    currentOperation.textContent = getMath (operand1, operand2, operator);
-    resultP.textContent = `${operand1} ${operator} ${operand2} `;
+    evaluateBtn = document.querySelector(".evaluate");
+    evaluateBtn.addEventListener("click", () => evaluate());
 }
 
 function writeVisorNumber (number) {
-    if (currentOperation.textContent === '.' || shouldRefreshScreen) currentOperation.textContent = "";
+    if (currentVisor.textContent === '.' || shouldRefreshScreen) visorClean();
     stopBlinking();
-    currentOperation.textContent += number;
+    currentVisor.textContent += number;
 }
 
-
-fullVisorClean = () => {
-    currentOperation.textContent = ".";
-    addBlinking(currentOperation);
-    resultP.textContent = "";
-    shouldRefreshScreen = false;
-}
-visorClean = () => {
-    currentOperation.textContent = ".";
-    addBlinking(currentOperation);
-    shouldRefreshScreen = false;
-}
-stopBlinking = () => {
-    const visorPBlink = document.querySelector(".visorPBlink")
-    if (visorPBlink) visorPBlink.setAttribute("class", 'visorP');
-}
-addBlinking = (currentOperation) => {
-    currentOperation.setAttribute("class", 'visorPBlink');
-    addBlinking = () => {
-        const visorPBlink = document.querySelector("#currentOperation");  
-        visorPBlink.setAttribute("class", "visorPBlink");
-    }
-}
-
-function setOperator (op){
-    operator = op;
-    operand1 = currentOperation.textContent;
-    resultP.textContent = `${operand1} ${operator}`;
+function setOperation (operator){
+    if (operationMode !== null) evaluate();
+    if (currentVisor.textContent !== ".") operand1 = currentVisor.textContent;
+    operationMode = operator;   
+    resultP.textContent = `${operand1} ${operationMode}`;
     shouldRefreshScreen = true;
-    return operator;    
 }
 
+function evaluate () {
+    if (shouldRefreshScreen || operationMode === null) return;
+    operand2 = currentVisor.textContent; 
+    currentVisor.textContent = getMath(operand1, operand2, operationMode);
+    resultP.textContent = `${operand1} ${operationMode} ${operand2} = ` ;
+    if (operand2 == 0 && operationMode === "÷") {
+        alert("Division by 0 is not possible");
+        fullVisorClean();
+    }
+    operationMode = null;
+}
 
 function getMath (a, b, operator) {
     a = Number(a);
@@ -91,9 +101,8 @@ function getMath (a, b, operator) {
             if (n === 0) return 1; else return n * factorial (n -1);
         };*/
         case "÷":
-            if (b === 0) alert ("Nice try!") 
+            if (b === 0) return;
             else return a / b;
-        break;
     }
 };
 
