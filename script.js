@@ -56,6 +56,9 @@ getEventListeners = () => {
     buttonsMath.forEach((buttonMath => 
         buttonMath.addEventListener("click", () => getOperands(buttonMath.textContent))
         ));
+    
+    buttonsMath.forEach((buttonMath => buttonMath.addEventListener("click", () => getOperator(buttonMath))
+    ));
 
     operateBtn = document.querySelector(".operate");
     operateBtn.addEventListener("click", () => console.log("FUUUUUUUUCK"));
@@ -83,23 +86,25 @@ writeResult = (number) => {
 writeVisorOperand = () => {
     placeholderP.textContent = operationsP.textContent;
 }
-getOperands = (button) => {
+getOperands = (button) => { 
+    console.log({operand1}, {operand2}, operator)
         if (!operand1) operand1 = Number(operationsP.textContent)
         else if (!operand2) operand2 = Number(operationsP.textContent);
         else if (operand1 && operand2) {
             operand1 = operand2;
             operand2 = Number(operationsP.textContent);
-        }
-        operator = button;
+        }        
         writeVisorNumber(button);
-        writeVisorOperand(button);
+        writeVisorOperand(operator);
         visorClean();
-        console.log({operand1}, {operand2}, operator)
+        
         result = operate(operand1, operand2, operator)
         historyP.textContent = `${result}`;
-
     }
 
+getOperator = (buttonMath) => {
+    operator = buttonMath.textContent;
+}    
 
 // function activators //
 getEventListeners();
