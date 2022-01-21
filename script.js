@@ -42,7 +42,7 @@ addBlinking = (currentVisor) => {
     currentVisor.setAttribute("class", 'visorPBlink');
 }
 fullVisorClean = () => {
-    currentVisor.textContent = "..";
+    currentVisor.textContent = "...";
     addBlinking(currentVisor);
     resultP.textContent = "";
     operand1 = '';
@@ -51,7 +51,7 @@ fullVisorClean = () => {
     shouldRefreshScreen = false;
 }
 visorCleanBlink = () => {
-    currentVisor.textContent = "..";
+    currentVisor.textContent = "...";
     addBlinking(currentVisor);
     shouldRefreshScreen = false;
 }
@@ -62,13 +62,13 @@ visorClean = () => {
 }
 
 function writeVisorNumber (number) {
-    if (currentVisor.textContent === '..' || shouldRefreshScreen) visorClean();
+    if (currentVisor.textContent === '...' || shouldRefreshScreen) visorClean();
     stopBlinking();
     currentVisor.textContent += number;
 }
 function setOperation (operator){
     if (operationMode !== null) evaluate();
-    if (currentVisor.textContent !== "..") operand1 = currentVisor.textContent;
+    if (currentVisor.textContent !== "...") operand1 = currentVisor.textContent;
     operationMode = operator;   
     resultP.textContent = `${operand1} ${operationMode}`;
     visorClean();
@@ -92,7 +92,7 @@ function getMath (a, b, operator) {
             return (a + b);
         case '-': 
             return (a - b);
-        case "X": 
+        case "x": 
             return (a * b);
         case "EXP":
             return Math.pow(a, b);
@@ -127,12 +127,12 @@ function processKeyboardOperator (keyOp) {
     if (keyOp === '+') return "+";
     if (keyOp === '-') return "-";
     if (keyOp === '/') return "÷";
-    if (keyOp === '*') return "X";
+    if (keyOp === '*') return "x";
     if (convertLower(keyOp) === "e") return "EXP";
 }
 function insertPoint () {
     if (shouldRefreshScreen) visorClean();
-    if (currentVisor.textContent === "..")
+    if (currentVisor.textContent === "...")
     currentVisor.textContent = 0;
     if (currentVisor.textContent.includes(".")) return;
     writeVisorNumber(".");
