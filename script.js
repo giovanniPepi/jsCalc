@@ -12,7 +12,7 @@ let shouldRefreshScreen = false;
 getEventListeners = () => {
     window.addEventListener('keydown', processKeyboardInpt);
     window.addEventListener('keyup', removeStuckTransition);
-    
+   
     cBtn = document.querySelector("#acBtn");
     acBtn.addEventListener("click", fullVisorClean);
 
@@ -126,6 +126,7 @@ function processKeyboardInpt (e) {
     getKeyCode(e)
 }
 function getKeyCode (e) {
+    console.log(e.keyCode);
     if (e.keyCode === 49 || e.keyCode === 97) simulateBtnClick(1);
     else if (e.keyCode === 98 || e.keyCode === 50) simulateBtnClick(2);
     else if (e.keyCode === 51 || e.keyCode === 99) simulateBtnClick(3);
@@ -141,8 +142,8 @@ function getKeyCode (e) {
     else if (e.keyCode === 190 || e.keyCode === 110) simulateBtnClick('.');
     else if (e.keyCode === 67) simulateBtnClick('c');
     else if (e.keyCode === 69) simulateBtnClick('e');
-    else if (e.keyCode === 61) simulateBtnClick('=');
-    else if (e.keyCode === 107 || e.keyCode === 61) simulateBtnClick('+');
+    else if (e.keyCode === 61 || e.keyCode === 187) simulateBtnClick('='); 
+    else if (e.keyCode === 107) simulateBtnClick('+');
     else if (e.keyCode === 109 || e.keyCode === 173) simulateBtnClick('-');
     else if (e.keyCode === 65) simulateBtnClick('a');
 }
