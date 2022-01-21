@@ -104,7 +104,11 @@ function convertLower (e) {
     return e.toLowerCase();
 }
 function delNumber () {
-    currentVisor.textContent = currentVisor.textContent.toString().slice(0, -1);
+    string = currentVisor.textContent.toString().slice(0, -1);
+    currentVisor.textContent = string;
+    procesedString = string.length;
+    if (procesedString < 1) visorCleanBlink();
+    
 }
 function processKeyboardInpt (e) {
     if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
