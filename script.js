@@ -11,7 +11,7 @@ let shouldRefreshScreen = false;
 
 getListeners = () => {
     window.addEventListener('keydown', processKeyboardInpt);
-    window.addEventListener('keyup', removeStuckTransition);
+    window.addEventListener('keyup', removeTransition);
     
     acBtn = document.querySelector("#acBtn");
     acBtn.addEventListener("click", fullVisorClean);
@@ -21,9 +21,7 @@ getListeners = () => {
 
     numBtn.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
-    );
-
-    numBtn.forEach(num => num.addEventListener("transitionend", removeTransition));    
+    );  
     
     operatBtn.forEach((btn => btn.addEventListener("click", () => setOperation(btn.textContent))
     ));
@@ -60,30 +58,12 @@ visorClean = () => {
     addBlinking(currentVisor);
     shouldRefreshScreen = false;
 }
-function writeVisorNumber (number) {
+writeVisorNumber = (number) => {
     if (currentVisor.textContent === '...' || shouldRefreshScreen) visorClean();
     stopBlinking();
     currentVisor.textContent += number;
 }
-function setOperation (operator){
-    if (operationMode !== null) evaluate();
-    if (currentVisor.textContent !== "...") operand1 = currentVisor.textContent;
-    operationMode = operator;   
-    resultP.textContent = `${operand1} ${operationMode}`;
-    visorClean();
-}
-function evaluate () {
-    if (shouldRefreshScreen || operationMode === null) return;
-    operand2 = currentVisor.textContent; 
-    currentVisor.textContent = round(getMath(operand1, operand2, operationMode));
-    resultP.textContent = `${operand1} ${operationMode} ${operand2} = ` ;
-    if (operand2 == 0 && operationMode === "÷") {
-        alert("Division by 0 is not possible");
-        fullVisorClean();
-    }
-    operationMode = null;
-}
-function getMath (a, b, operator) {
+getMath = (a, b, operator) => {
     a = Number(a);
     b = Number(b);
     switch (operator) {
@@ -100,31 +80,38 @@ function getMath (a, b, operator) {
             else return a / b;
     }
 };
-function round(number) {
-    return Math.round(number*1000000000000000) / 1000000000000000;
+round = (number) => {
+    return Math.round(number*1000000) / 1000000;
 }
-function convertLower (e) {
-    return e.toLowerCase();
+evaluate = () => {
+    if (shouldRefreshScreen || operationMode === null) return;
+    operand2 = currentVisor.textContent; 
+    currentVisor.textContent = round(getMath(operand1, operand2, operationMode));
+    resultP.textContent = `${operand1} ${operationMode} ${operand2} = ` ;
+    if (operand2 == 0 && operationMode === "÷") {
+        alert("Division by 0 is not possible");
+        fullVisorClean();
+    }
+    operationMode = null;
 }
-function delNumber () {
+setOperation = (operator) => {
+    if (operationMode !== null) evaluate();
+    if (currentVisor.textContent !== "...") operand1 = currentVisor.textContent;
+    operationMode = operator;   
+    resultP.textContent = `${operand1} ${operationMode}`;
+    visorClean();
+}
+delNumber = () => {
     string = currentVisor.textContent.toString().slice(0, -1);
     currentVisor.textContent = string;
     procesedString = string.length;
     if (procesedString < 1) visorCleanBlink();
     
 }
-function processKeyboardInpt (e) {
-    if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
-    if (convertLower(e.key) === "c" || e.key === "Escape") visorCleanBlink();
-    if (convertLower(e.key) === 'a') fullVisorClean();
-    if (e.key === "Enter") evaluate();
-    if (e.key === "Backspace") delNumber();
-    if (e.key === ".") insertPoint();
-    if (e.key === ",") insertPoint();
-    if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || convertLower(e.key) === "e") setOperation(processKeyboardOperator(e.key));
-    getKeyCode(e)
+simulateBtnClick = (number) => {                                        
+    btnToPress = document.querySelector(`[data-number="${number}"]`).classList.add('activeNm');    
 }
-function getKeyCode (e) {
+getKeyCode = (e) => {
     if (e.keyCode === 49 || e.keyCode === 97) simulateBtnClick(1);
     else if (e.keyCode === 98 || e.keyCode === 50) simulateBtnClick(2);
     else if (e.keyCode === 51 || e.keyCode === 99) simulateBtnClick(3);
@@ -144,25 +131,35 @@ function getKeyCode (e) {
     else if (e.keyCode === 107) simulateBtnClick('+');
     else if (e.keyCode === 109 || e.keyCode === 173) simulateBtnClick('-');
     else if (e.keyCode === 65) simulateBtnClick('a');
+    else if (e.keyCode === 13) simulateBtnClick('=');
 }
-function simulateBtnClick (number) {                                        
-    btnToPress = document.querySelector(`[data-number="${number}"]`).classList.add('activeNm');    
-}
-function removeTransition() {
-    this.classList.remove('activeNm');
-}
-function removeStuckTransition () {
-    toRemove = document.querySelectorAll(".activeNm");
-    toRemove.forEach(remove => remove.classList.remove('activeNm'));
-}
-function processKeyboardOperator (keyOp) {
+processKeyboardOperator = (keyOp) => {
+    keyOp = keyOp.toLowerCase();
     if (keyOp === '+') return "+";
     if (keyOp === '-') return "-";
     if (keyOp === '/') return "÷";
     if (keyOp === '*') return "x";
-    if (convertLower(keyOp) === "e") return "EXP";
+    if (keyOp === "e") return "EXP";
+    if (keyOp === "x") return "x";
 }
-function insertPoint () {
+processKeyboardInpt = (e) => {
+    e.key = e.key.toLowerCase();
+    console.log(e.key);
+    if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
+    if (e.key === "c" || e.key === "Escape") visorCleanBlink();
+    if (e.key === 'a') fullVisorClean();
+    if (e.key === "Enter") evaluate();
+    if (e.key === "Backspace") delNumber();
+    if (e.key === ".") insertPoint();
+    if (e.key === ",") insertPoint();
+    if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || e.key === "x" || e.key === "e") setOperation(processKeyboardOperator(e.key));
+    getKeyCode(e)
+}
+removeTransition = () => {
+    toRemove = document.querySelectorAll(".activeNm");
+    toRemove.forEach(remove => remove.classList.remove('activeNm'));
+}
+insertPoint = () => {
     if (shouldRefreshScreen) visorClean();
     if (currentVisor.textContent === "...")
     currentVisor.textContent = 0;
