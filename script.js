@@ -144,7 +144,6 @@ processKeyboardOperator = (keyOp) => {
 }
 processKeyboardInpt = (e) => {
     e.key = e.key.toLowerCase();
-    console.log(e.key);
     if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
     if (e.key === "c" || e.key === "Escape") visorCleanBlink();
     if (e.key === 'a') fullVisorClean();
@@ -166,5 +165,4 @@ insertPoint = () => {
     if (currentVisor.textContent.includes(".")) return;
     writeVisorNumber(".");
 }
-
 getListeners();
