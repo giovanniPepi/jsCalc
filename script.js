@@ -32,8 +32,8 @@ getListeners = () => {
     delBtn = document.querySelector("#delBtn");
     delBtn.addEventListener("click", delNumber);
 
-    pointBtn = document.querySelector("#point")
-    pointBtn.addEventListener("click", insertPoint);    
+    pointBtn = document.querySelector("#point");
+    pointBtn.addEventListener("click", insertPoint); 
 }
 stopBlinking = () => {
     currentVisor.setAttribute("class", 'visorP');
@@ -54,7 +54,7 @@ visorCleanBlink = () => {
     shouldRefreshScreen = false;
 }
 visorClean = () => {
-    currentVisor.textContent = "";
+    currentVisor.textContent ="";
     addBlinking(currentVisor);
     shouldRefreshScreen = false;
 }
@@ -142,8 +142,8 @@ processKeyboardOperator = (keyOp) => {
     if (keyOp === "x") return "x";
 }
 insertPoint = () => {
-    if (shouldRefreshScreen) visorClean();
-    if (currentVisor.textContent === "...") currentVisor.textContent = 0;
+    visorClean();
+    if (currentVisor.textContent === "") currentVisor.textContent = 0;
     if (currentVisor.textContent.includes(".")) return
     writeVisorNumber(".");
 }

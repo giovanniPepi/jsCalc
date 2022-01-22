@@ -25,7 +25,7 @@ body {
 .visor {
     background: rgb(173,171, 168);
     border-radius: 1rem;;
-    margin-bottom: .8rem;
+    margin: 0 .3rem .8rem .3rem;
     min-height: 10rem;
     display: flex;
     flex-direction: column;
@@ -43,7 +43,7 @@ body {
     font-size: 2rem;
     padding: .5rem;
     min-height: 2rem;
-    max-width: 29rem;    
+    max-width: 26rem;    
     align-items: flex-end;
     justify-content: flex-end;
 }
@@ -56,7 +56,7 @@ body {
     font-size: 2rem;
     padding: .5rem;
     min-height: 2rem;
-    max-width: 29rem;    
+    max-width: 26rem;    
     align-items: flex-end;
     justify-content: flex-end;
     animation: blinker 1s step-start infinite;
@@ -79,7 +79,6 @@ body {
     font-size: 1.4rem;
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: .1rem;
 }
 
