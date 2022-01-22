@@ -140,9 +140,11 @@ processKeyboardOperator = (keyOp) => {
     if (keyOp === '/') return "÷";
     if (keyOp === '*') return "x";
     if (keyOp === "e") return "EXP";
+    if (keyOp === "x") return "x";
 }
 processKeyboardInpt = (e) => {
     e.key = e.key.toLowerCase();
+    console.log(e.key);
     if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
     if (e.key === "c" || e.key === "Escape") visorCleanBlink();
     if (e.key === 'a') fullVisorClean();
@@ -150,7 +152,7 @@ processKeyboardInpt = (e) => {
     if (e.key === "Backspace") delNumber();
     if (e.key === ".") insertPoint();
     if (e.key === ",") insertPoint();
-    if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || e.key === "e") setOperation(processKeyboardOperator(e.key));
+    if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || e.key === "x" || e.key === "e") setOperation(processKeyboardOperator(e.key));
     getKeyCode(e)
 }
 removeTransition = () => {
