@@ -105,8 +105,7 @@ delNumber = () => {
     string = currentVisor.textContent.toString().slice(0, -1);
     currentVisor.textContent = string;
     procesedString = string.length;
-    if (procesedString < 1) visorCleanBlink();
-    
+    if (procesedString < 1) visorCleanBlink();    
 }
 simulateBtnClick = (number) => {                                        
     btnToPress = document.querySelector(`[data-number="${number}"]`).classList.add('activeNm');    
@@ -142,16 +141,20 @@ processKeyboardOperator = (keyOp) => {
     if (keyOp === "e") return "EXP";
     if (keyOp === "x") return "x";
 }
+insertPoint = () => {
+    if (shouldRefreshScreen) visorClean();
+    if (currentVisor.textContent === "...") currentVisor.textContent = 0;
+    if (currentVisor.textContent.includes(".")) return
+    writeVisorNumber(".");
+}
 processKeyboardInpt = (e) => {
     e.key = e.key.toLowerCase();
-    console.log(e.key);
     if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
     if (e.key === "c" || e.key === "Escape") visorCleanBlink();
     if (e.key === 'a') fullVisorClean();
     if (e.key === "Enter") evaluate();
     if (e.key === "Backspace") delNumber();
-    if (e.key === ".") insertPoint();
-    if (e.key === ",") insertPoint();
+    if (e.key === "." || e.key === ",") insertPoint();
     if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || e.key === "x" || e.key === "e") setOperation(processKeyboardOperator(e.key));
     getKeyCode(e)
 }
@@ -159,12 +162,4 @@ removeTransition = () => {
     toRemove = document.querySelectorAll(".activeNm");
     toRemove.forEach(remove => remove.classList.remove('activeNm'));
 }
-insertPoint = () => {
-    if (shouldRefreshScreen) visorClean();
-    if (currentVisor.textContent === "...")
-    currentVisor.textContent = 0;
-    if (currentVisor.textContent.includes(".")) return;
-    writeVisorNumber(".");
-}
-
 getListeners();
