@@ -10,6 +10,8 @@ body {
 }
 
 .container {
+    display:grid;
+    grid-template-columns: repeat(5, 1fr);
     background: rgb(72, 67, 87);
     border-radius: 2rem;
     padding: 1.4rem;
@@ -17,6 +19,8 @@ body {
 }
 
 .logo {
+    grid-row: 1 / 1;
+    grid-column: 1 / 2;
     margin-top: 0;
     margin-bottom: 1rem;
     padding: 0;
@@ -27,8 +31,7 @@ body {
     border-radius: 1rem;;
     margin: 0 .3rem .8rem .3rem;
     min-height: 10rem;
-    display: flex;
-    flex-direction: column;
+    grid-column: 1 / 6;
     max-width: 26rem;
     word-wrap: break-word;
     word-break: break-all;
