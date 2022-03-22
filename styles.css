@@ -11,17 +11,17 @@ body {
 
 .container {
     display:grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, minmax(6.5rem, 1fr));
+    grid-template-rows: repeat (10, 1fr);
     background: rgb(72, 67, 87);
     border-radius: 2rem;
     padding: 1.4rem;
-    max-width: 26rem;
 }
 
 .logo {
-    grid-row: 1 / 1;
-    grid-column: 1 / 2;
-    margin-top: 0;
+    /* grid-row: 1 / 1;
+    grid-column: 3 / 4;
+     */margin-top: 0;
     margin-bottom: 1rem;
     padding: 0;
 }
@@ -30,9 +30,9 @@ body {
     background: rgb(173,171, 168);
     border-radius: 1rem;;
     margin: 0 .3rem .8rem .3rem;
-    min-height: 10rem;
+    /* min-height: 10rem;
     grid-column: 1 / 6;
-    max-width: 26rem;
+    max-width: 26rem; */
     word-wrap: break-word;
     word-break: break-all;
     justify-content: space-between; 
@@ -45,11 +45,11 @@ body {
     font-weight: bold;
     font-size: 2rem;
     padding: .5rem;
-    min-height: 2rem;
+    /* min-height: 2rem;
     max-width: 26rem;    
     align-items: flex-end;
     justify-content: flex-end;
-}
+ */}
 
 .visorPBlink {
     margin: .2rem;
@@ -58,11 +58,11 @@ body {
     font-weight: bold;
     font-size: 2rem;
     padding: .5rem;
-    min-height: 2rem;
+    /* min-height: 2rem;
     max-width: 26rem;    
     align-items: flex-end;
     justify-content: flex-end;
-    animation: blinker 1s step-start infinite;
+     */animation: blinker 1s step-start infinite;
     -webkit-animation: blinker 1s step-start infinite;
 }
 
@@ -77,13 +77,13 @@ body {
       }
 }
 
-.buttonContainer1, .buttonContainer2, 
+/* .buttonContainer1, .buttonContainer2, 
 .buttonContainer3, .buttonContainer4 {
     font-size: 1.4rem;
     display: flex;
     justify-content: center;
     padding: .1rem;
-}
+} */
 
 .buttons, .buttonsFunc, .operatBtn, .evaluate {
     display: flex;
@@ -100,10 +100,10 @@ body {
     transition: all 0.1s ease-in-out;
     flex-shrink: 1;
 }
-
+/* 
 #evaluate {
     width: 8rem;
-}
+} */
 
 .buttonsFunc {
     border: .5rem solid  rgb(226, 85, 104);
@@ -135,8 +135,6 @@ body {
     background-color:  rgb(118, 108, 126);
     border: .5rem solid rgb(118, 108, 126);
 }
-
-
 img {
     height: 100%;
     width: 6%;
