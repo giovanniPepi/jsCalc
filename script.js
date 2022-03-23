@@ -104,6 +104,7 @@ setOperation = (operator) => {
 delNumber = () => {
     if(currentVisor.textContent === '...') return;
     string = currentVisor.textContent.toString().slice(0, -1);
+    console.log(string);
     currentVisor.textContent = string;
     procesedString = string.length;
     if (procesedString < 1) visorCleanBlink();    
@@ -152,7 +153,7 @@ insertPoint = () => {
 processKeyboardInpt = (e) => {
     e.key = e.key.toLowerCase();
     if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
-    if (e.key === "c" || e.key === "Escape") visorCleanBlink();
+    if (e.key === "c" || e.key === "Escape") delNumber();
     if (e.key === 'a') fullVisorClean();
     if (e.key === "Enter") evaluate();
     if (e.key === "Backspace") delNumber();
