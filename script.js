@@ -140,7 +140,7 @@ processKeyboardOperator = (keyOp) => {
     if (keyOp === '-') return "-";
     if (keyOp === '/') return "÷";
     if (keyOp === '*') return "x";
-    if (keyOp === "e") return "e^";
+    if (keyOp === "e") return "e";
     if (keyOp === "x") return "x";
     if (keyOp === "%") return "%";
 }
