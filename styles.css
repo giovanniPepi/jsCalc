@@ -4,10 +4,10 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    background: rgb(240, 240, 240);
+    background: #CBD5E1;
     text-align: center;
+    font-size: calc(1rem + 1vw);
 }
-
 .container {
     display:grid;
     grid-template-columns: repeat(4, minmax(5rem, 5.5rem));
@@ -15,7 +15,7 @@ body {
     gap: .1rem;
     background: rgb(72, 67, 87);
     border-radius: 2rem;
-    padding: 1.4rem;    
+    padding: 1.4rem;   
 }
 .visor {
     background: rgb(173,171, 168);
@@ -32,7 +32,7 @@ body {
     color: rgb(45, 45, 45);
     display: flex;
     font-weight: bold;
-    font-size: 2rem;
+    font-size: calc(1.5rem + 1vw);
     padding: .5rem;
     /* min-height: 2rem;
     max-width: 26rem;    
@@ -65,15 +65,6 @@ body {
         opacity: 0;
       }
 }
-
-/* .buttonContainer1, .buttonContainer2, 
-.buttonContainer3, .buttonContainer4 {
-    font-size: 1.4rem;
-    display: flex;
-    justify-content: center;
-    padding: .1rem;
-} */
-
 .buttons, .buttonsFunc, .operatBtn, .evaluate {
     display: flex;
     align-items: center;
@@ -126,7 +117,7 @@ body {
     border: .5rem solid rgb(118, 108, 126);
 }
 img {
-    width: 55%;
+    width: 45%;
     transition: transform 1.5s cubic-bezier(0,.83,.27,1.55);  
 }
 
