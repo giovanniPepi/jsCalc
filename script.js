@@ -14,23 +14,21 @@ getListeners = () => {
     window.addEventListener('keyup', removeTransition);
     
     acBtn = document.querySelector("#acBtn");
-    acBtn.addEventListener("click", fullVisorClean);
+    acBtn.addEventListener("click", fullVisorClean());
     
-    cBtn = document.querySelector("#delBtn");
-    cBtn.addEventListener("click", visorCleanBlink);
+    cBtn = document.querySelector("#cBtn");
+    cBtn.addEventListener("click", visorCleanBlink());
 
     numBtn.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
-    );  
-    
+    );      
     operatBtn.forEach((btn => btn.addEventListener("click", () => setOperation(btn.textContent))
     ));
-
     evaluateBtn = document.querySelector(".evaluate");
     evaluateBtn.addEventListener("click", () => evaluate());
 
-    delBtn = document.querySelector("#delBtn");
-    delBtn.addEventListener("click", delNumber);
+    cBtn = document.querySelector("#cBtn");
+    cBtn.addEventListener("click", delNumber);
 
     pointBtn = document.querySelector("#point");
     pointBtn.addEventListener("click", insertPoint); 
@@ -104,6 +102,7 @@ setOperation = (operator) => {
     visorClean();
 }
 delNumber = () => {
+    if(currentVisor.textContent === '...') return;
     string = currentVisor.textContent.toString().slice(0, -1);
     currentVisor.textContent = string;
     procesedString = string.length;
