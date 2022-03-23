@@ -78,6 +78,8 @@ getMath = (a, b, operator) => {
         case "÷":
             if (b === 0) return;
             else return a / b;
+        case "%":
+            return (b * a) / 100;
     }
 };
 round = (number) => {
@@ -140,6 +142,7 @@ processKeyboardOperator = (keyOp) => {
     if (keyOp === '*') return "x";
     if (keyOp === "e") return "e^";
     if (keyOp === "x") return "x";
+    if (keyOp === "%") return "%";
 }
 insertPoint = () => {
     visorClean();
@@ -155,7 +158,7 @@ processKeyboardInpt = (e) => {
     if (e.key === "Enter") evaluate();
     if (e.key === "Backspace") delNumber();
     if (e.key === "." || e.key === ",") insertPoint();
-    if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || e.key === "x" || e.key === "e") setOperation(processKeyboardOperator(e.key));
+    if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || e.key === "x" || e.key === "e" || e.key === "%") setOperation(processKeyboardOperator(e.key));
     getKeyCode(e)
 }
 removeTransition = () => {
