@@ -71,7 +71,7 @@ getMath = (a, b, operator) => {
             return (a - b);
         case "x": 
             return (a * b);
-        case "e^":
+        case "e":
             return Math.pow(a, b);
         case "÷":
             if (b === 0) return;
