@@ -14,10 +14,10 @@ getListeners = () => {
     window.addEventListener('keyup', removeTransition);
     
     acBtn = document.querySelector("#acBtn");
-    acBtn.addEventListener("click", fullVisorClean());
+    acBtn.addEventListener("click", () => fullVisorClean());
     
     cBtn = document.querySelector("#cBtn");
-    cBtn.addEventListener("click", visorCleanBlink());
+    cBtn.addEventListener("click", fullVisorClean());
 
     numBtn.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
@@ -47,7 +47,7 @@ fullVisorClean = () => {
     visorCleanBlink();
 }
 visorCleanBlink = () => {
-    currentVisor.textContent = "...";
+    currentVisor.textContent = ".";
     addBlinking(currentVisor);
     shouldRefreshScreen = false;
 }
@@ -57,7 +57,7 @@ visorClean = () => {
     shouldRefreshScreen = false;
 }
 writeVisorNumber = (number) => {
-    if (currentVisor.textContent === '...' || shouldRefreshScreen) visorClean();
+    if (currentVisor.textContent === '.' || shouldRefreshScreen) visorClean();
     stopBlinking();
     currentVisor.textContent += number;
 }
@@ -96,13 +96,13 @@ evaluate = () => {
 }
 setOperation = (operator) => {
     if (operationMode !== null) evaluate();
-    if (currentVisor.textContent !== "...") operand1 = currentVisor.textContent;
+    if (currentVisor.textContent !== ".") operand1 = currentVisor.textContent;
     operationMode = operator;   
     resultP.textContent = `${operand1} ${operationMode}`;
     visorClean();
 }
 delNumber = () => {
-    if(currentVisor.textContent === '...') return;
+    if(currentVisor.textContent === '.') return;
     string = currentVisor.textContent.toString().slice(0, -1);
     console.log(string);
     currentVisor.textContent = string;
