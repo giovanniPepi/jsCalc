@@ -3,15 +3,24 @@ body {
     display: flex; 
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: .5rem;
     background: #CBD5E1;
     text-align: center;
     font-size: calc(1rem + 1vw);
 }
+
+html {
+    height: 100vh;
+}
+body {
+    max-height: 100vh;
+}
+
 .container {
     display:grid;
     grid-template-columns: repeat(4, minmax(5rem, 5.5rem));
-    grid-template-rows: repeat(7, 1fr);
+    grid-template-rows: repeat(7, minmax(5rem, 5.5rem));
+    grid-auto-columns: 0;
     gap: .1rem;
     background: rgb(72, 67, 87);
     border-radius: 2rem;
@@ -21,12 +30,27 @@ body {
     background: rgb(173,171, 168);
     border-radius: 1rem;;
     margin: 0 .3rem .8rem .3rem;
-    /* min-height: 10rem; */
     grid-column: 1 / 5;
     grid-row: 1 / 3;
     word-wrap: break-word;
     word-break: break-all;
+    overflow: auto;
+    scrollbar-width: thin; /* firefox */
+    scrollbar-color: #CBD5E1 rgb(72, 67, 87); /* firefox */
 }
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 12px;
+  }  
+  *::-webkit-scrollbar-track {
+    background: rgb(72, 67, 87);
+  }  
+  *::-webkit-scrollbar-thumb {
+    background-color: #CBD5E1 ;
+    border-radius: 20px;
+    border: 3px solid rgb(72, 67, 87);
+  }
+
 .visorP {
     margin: .2rem;
     color: rgb(45, 45, 45);
@@ -34,24 +58,18 @@ body {
     font-weight: bold;
     font-size: calc(1.5rem + 1vw);
     padding: .5rem;
-    /* min-height: 2rem;
-    max-width: 26rem;    
     align-items: flex-end;
     justify-content: flex-end;
- */}
-
+}
 .visorPBlink {
     margin: .2rem;
     color: rgb(45, 45, 45);
     display: flex;
     font-weight: bold;
-    font-size: 2rem;
+    font-size: calc(1.5rem + 1vw);
     padding: .5rem;
-    /* min-height: 2rem;
-    max-width: 26rem;    
-    align-items: flex-end;
     justify-content: flex-end;
-     */animation: blinker 1s step-start infinite;
+    animation: blinker 1s step-start infinite;
     -webkit-animation: blinker 1s step-start infinite;
 }
 
