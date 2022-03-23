@@ -1,12 +1,12 @@
 :root {
     --buttonSize: calc(1rem + 1vw); 
-    --fontSize: calc(.7rem + .5vw);
+    font-size: calc(14px + .4vw);
 }
 body {
     font-family: Roboto mono;
     display: flex; 
     flex-direction: column;
-    align-items: center;
+    align-items: center;   
     gap: .5rem;
     background: #fcd34de0;
     text-align: center;
@@ -14,8 +14,8 @@ body {
 }
 .container {
     display:grid;
-    grid-template-columns: repeat(4, minmax(3.2rem, auto));
-    grid-template-rows: repeat(7, minmax(3.2rem, auto));
+    grid-template-columns: repeat(4, 3.7rem);
+    grid-template-rows: repeat(7, 3.7rem);
     grid-auto-columns: 0;
     gap: .1rem;
     background: rgb(72, 67, 87);
@@ -23,6 +23,7 @@ body {
     padding: 1.1rem;
 }
 .visor {
+    font-size: 2rem;
     background: rgb(173,171, 168);
     border-radius: .5rem;;
     margin: .5rem .2rem .5rem .2rem;
@@ -126,7 +127,7 @@ body {
 }
 
 .activeNm {
-    transform: scale(1.05);
+    transform: scale(1.01);
     background-color:  rgb(118, 108, 126);
     border: .5rem solid rgb(118, 108, 126);
 }

@@ -73,7 +73,7 @@ getMath = (a, b, operator) => {
             return (a - b);
         case "x": 
             return (a * b);
-        case "EXP":
+        case "e^":
             return Math.pow(a, b);
         case "÷":
             if (b === 0) return;
@@ -138,7 +138,7 @@ processKeyboardOperator = (keyOp) => {
     if (keyOp === '-') return "-";
     if (keyOp === '/') return "÷";
     if (keyOp === '*') return "x";
-    if (keyOp === "e") return "EXP";
+    if (keyOp === "e") return "e^";
     if (keyOp === "x") return "x";
 }
 insertPoint = () => {
