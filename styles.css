@@ -7,10 +7,12 @@ body {
     display: flex; 
     flex-direction: column;
     align-items: center;   
+    justify-content: space-around;
     gap: .5rem;
     background: #fcd34de0;
     text-align: center;
     font-size: var(--fontSize);
+    height: 100vh;
 }
 .container {
     display:grid;
