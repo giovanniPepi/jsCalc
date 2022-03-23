@@ -1,6 +1,6 @@
 :root {
     --buttonSize: calc(1rem + 1vw); 
-    font-size: calc(14px + .4vw);
+    font-size: calc(14px + .7vw);
 }
 body {
     font-family: Roboto mono;
@@ -12,13 +12,12 @@ body {
     background: #fcd34de0;
     text-align: center;
     font-size: var(--fontSize);
-    height: 100vh;
+    height: 98vh;
 }
 .container {
     display:grid;
     grid-template-columns: repeat(4, 3.7rem);
     grid-template-rows: repeat(7, 3.7rem);
-    grid-auto-columns: 0;
     gap: .1rem;
     background: rgb(72, 67, 87);
     border-radius: 2rem;
@@ -97,11 +96,6 @@ body {
     transition: all 0.1s ease-in-out;
     flex-shrink: 1;
 }
- 
-#evaluate {
-    grid-column: 3 / 5;
-    width: auto;
-} 
 
 .buttonsFunc {
     border: .4rem solid  rgb(226, 85, 104);
