@@ -125,7 +125,7 @@ body {
 .activeNm {
     transform: scale(1.05);
     background-color:  rgb(118, 108, 126);
-    border: .5rem solid rgb(118, 108, 126);
+    border: .3rem solid rgb(118, 108, 126);
 }
 img {
     width: 65%;
