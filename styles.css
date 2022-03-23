@@ -1,37 +1,33 @@
+:root {
+    --buttonSize: calc(1rem + 1vw); 
+    --fontSize: calc(.7rem + .5vw);
+}
 body {
     font-family: Roboto mono;
     display: flex; 
     flex-direction: column;
     align-items: center;
     gap: .5rem;
-    background: #CBD5E1;
+    background: #fcd34de0;
     text-align: center;
-    font-size: calc(1rem + 1vw);
+    font-size: var(--fontSize);
 }
-
-html {
-    height: 100vh;
-}
-body {
-    max-height: 100vh;
-}
-
 .container {
     display:grid;
-    grid-template-columns: repeat(4, minmax(5rem, 5.5rem));
-    grid-template-rows: repeat(7, minmax(5rem, 5.5rem));
+    grid-template-columns: repeat(4, minmax(3.2rem, auto));
+    grid-template-rows: repeat(7, minmax(3.2rem, auto));
     grid-auto-columns: 0;
     gap: .1rem;
     background: rgb(72, 67, 87);
     border-radius: 2rem;
-    padding: 1.4rem;   
+    padding: 1.1rem;
 }
 .visor {
     background: rgb(173,171, 168);
-    border-radius: 1rem;;
-    margin: 0 .3rem .8rem .3rem;
+    border-radius: .5rem;;
+    margin: .5rem .2rem .5rem .2rem;
     grid-column: 1 / 5;
-    grid-row: 1 / 3;
+    grid-row: 1 / 4;
     word-wrap: break-word;
     word-break: break-all;
     overflow: auto;
@@ -56,7 +52,7 @@ body {
     color: rgb(45, 45, 45);
     display: flex;
     font-weight: bold;
-    font-size: calc(1.5rem + 1vw);
+    font-size: var(--font-size);
     padding: .5rem;
     align-items: flex-end;
     justify-content: flex-end;
@@ -66,7 +62,7 @@ body {
     color: rgb(45, 45, 45);
     display: flex;
     font-weight: bold;
-    font-size: calc(1.5rem + 1vw);
+    font-size: var(--font-size);
     padding: .5rem;
     justify-content: flex-end;
     animation: blinker 1s step-start infinite;
@@ -89,11 +85,11 @@ body {
     justify-content: center;
     margin: .2rem;
     padding: .5rem;
-    height: 3rem;
-    width: 3rem;
+    height: var(--buttonSize);
+    width: var(--buttonSize);
     color: rgb(225, 225, 225);
     font-weight: bold;
-    border: .5rem solid rgb(156, 150, 160);
+    border: .4rem solid rgb(156, 150, 160);
     border-radius: 1rem;
     transition: all 0.1s ease-in-out;
     flex-shrink: 1;
@@ -105,7 +101,7 @@ body {
 } 
 
 .buttonsFunc {
-    border: .5rem solid  rgb(226, 85, 104);
+    border: .4rem solid  rgb(226, 85, 104);
     color: rgb(226, 85, 104);
 }
 
