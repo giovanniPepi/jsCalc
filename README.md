@@ -1,7 +1,8 @@
 # jsCalc
 
-<h1 display="flex" gap=".5rem">A Calculator made with JavaScript</h1>
+<h1>A Calculator made with JavaScript</h1>
 
+<div  display="flex" gap=".5rem">
 <h3>Keyboard Shortcuts:</h3>
 <h4>C - Delete the last digit</h4>
 <h4>A - Trigger AC and clear everything</h4>
@@ -14,6 +15,7 @@
 <h4>+</h4>
 <h4>-</h4>
 <h4>.</h4>
+</div>
 
 
 <h5>Known bugs: </h5>
