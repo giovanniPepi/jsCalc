@@ -1,6 +1,6 @@
 # jsCalc
 
-<h1>A Calculator made with JavaScript</h1>
+<h1 display="flex" gap=".5rem">A Calculator made with JavaScript</h1>
 
 <h3>Keyboard Shortcuts:</h3>
 <h4>C - Delete the last digit</h4>
