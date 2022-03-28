@@ -118,7 +118,10 @@ body {
 .activeNm {
     transform: scale(1.05);
 }
-img {
+.logo {
+    padding-top: .3rem;
+}
+img { 
     width: 60%;
     transition: transform 1.5s cubic-bezier(0,.83,.27,1.55);  
 }
