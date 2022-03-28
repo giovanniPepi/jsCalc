@@ -1,5 +1,14 @@
 :root {
     --buttonSize: calc(1rem + 1.1vh); 
+    --mainColor: rgb(72, 67, 87);
+    --visorFont: rgb(45, 45, 45);
+    --visorColor: rgb(173,171, 168);
+    --redBtn:  rgb(226, 85, 104);
+    --activeRedBtn: rgb(230, 59, 81);
+    --myWhite: rgb(200, 200, 200);
+    --myWhite2: rgb(215, 215, 215);
+    --btnActive: rgb(118, 108, 126);
+    --hoverBtn: rgb(156, 150, 160);
     font-size: calc(10px + 1.5vh);
 }
 body {
@@ -16,14 +25,14 @@ body {
 .container {
     display:grid;
     grid-template-columns: repeat(4, 3.6rem);
-    grid-template-rows: repeat(8, 3.8rem);
-    background: rgb(72, 67, 87);
+    grid-template-rows: repeat(8, 3.6rem);
+    background: var(--mainColor);
     border-radius: 2rem;
     padding: .9rem;
 }
 .visor {
     font-size: 2rem;
-    background: rgb(173,171, 168);
+    background: var(--visorColor);
     border-radius: .5rem;;
     margin: .5rem .2rem .5rem .2rem;
     grid-column: 1 / 5;
@@ -32,26 +41,23 @@ body {
     word-break: break-all;
     overflow: auto;
     scrollbar-width: thin; /* firefox */
-    scrollbar-color: #CBD5E1 rgb(72, 67, 87); /* firefox */
+    scrollbar-color: #CBD5E1 var(--mainColor); /* firefox */
 }
-
-
 /* Works on Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
     width: 12px;
   }  
   *::-webkit-scrollbar-track {
-    background: rgb(72, 67, 87);
+    background: var(--mainColor);
   }  
   *::-webkit-scrollbar-thumb {
     background-color: #CBD5E1 ;
     border-radius: 20px;
-    border: 3px solid rgb(72, 67, 87);
-  }
-
+    border: 3px solid var(--mainColor);
+}
 .visorP {
     margin: .2rem;
-    color: rgb(45, 45, 45);
+    color: var(--visorFont);
     display: flex;
     font-weight: bold;
     font-size: var(--font-size);
@@ -61,7 +67,7 @@ body {
 }
 .visorPBlink {
     margin: .2rem;
-    color: rgb(45, 45, 45);
+    color: var(--visorColor);
     display: flex;
     font-weight: bold;
     font-size: var(--font-size);
@@ -70,7 +76,6 @@ body {
     animation: blinker 1s step-start infinite;
     -webkit-animation: blinker 1s step-start infinite;
 }
-
 @keyframes blink-animation {
     50% {
         opacity: 0;
@@ -89,50 +94,41 @@ body {
     padding: .5rem;
     height: var(--buttonSize);
     width: var(--buttonSize);
-    color: rgb(225, 225, 225);
+    color: var(--myWhite2);
     font-weight: bold;
-    border: .4rem solid rgb(156, 150, 160);
+    border: .4rem solid var(--hoverBtn);
     border-radius: 1rem;
     transition: all 0.1s ease-in-out;
     flex-shrink: 1;
 }
-
 .buttonsFunc {
-    border: .4rem solid  rgb(226, 85, 104);
-    color: rgb(226, 85, 104);
+    border: .4rem solid var(--redBtn);
+    color:var(--redBtn);
 }
-
 .buttonsFunc:hover {
-    background-color: rgb(226, 85, 104);
-    color:rgb(200, 200, 200);
+    background-color:var(--redBtn);
+    color:var(--myWhite);
 }
-
 .buttonsFunc:active {
-    background-color: rgb(230, 59, 81);
-    border: .5rem solid rgb(230, 59, 81);
-    color:rgb(200, 200, 200);
+    background-color: var(--activeRedBtn);
+    border: .5rem solid var(--activeRedBtn);
+    color:var(--myWhite);
 }
-
 .buttons:hover, .operatBtn:hover, .evaluate:hover {
-    background-color:  rgb(156, 150, 160);
+    background-color:  var(--hoverBtn);
 }
-
 .buttons:active, .operatBtn:active, .evaluate:active {
-    background-color:  rgb(118, 108, 126);
-    border: .5rem solid rgb(118, 108, 126);
+    background-color:  var(--btnActive);
+    border: .5rem solid var(--btnActive);
 }
-
 .activeNm {
     transform: scale(1.05);
-    background-color:  rgb(118, 108, 126);
-    border: .3rem solid rgb(118, 108, 126);
 }
 img {
-    width: 64%;
+    width: 60%;
     transition: transform 1.5s cubic-bezier(0,.83,.27,1.55);  
 }
-
-Img:hover {
+img:hover {
     transform: rotate(720deg) scale(1.2);
 }
 
