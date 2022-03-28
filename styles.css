@@ -1,14 +1,13 @@
 :root {
     --buttonSize: calc(1rem + 1.1vh); 
-    font-size: calc(9px + 1vh);
+    font-size: calc(10px + 1.5vh);
 }
 body {
     font-family: Roboto mono;
     display: flex; 
     flex-direction: column;
     align-items: center;   
-    justify-content: center;
-    gap: 2rem;
+    gap: 1rem;
     background: #fcd34de0;
     text-align: center;
     font-size: var(--fontSize);
@@ -16,9 +15,9 @@ body {
 }
 .container {
     display:grid;
-    grid-template-columns: repeat(4, 3.7rem);
-    grid-template-rows: repeat(7, 3.7rem);
-    gap: .1rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr repeat(7, 1fr);
+
     background: rgb(72, 67, 87);
     border-radius: 2rem;
     padding: 1.1rem;
@@ -36,6 +35,8 @@ body {
     scrollbar-width: thin; /* firefox */
     scrollbar-color: #CBD5E1 rgb(72, 67, 87); /* firefox */
 }
+
+
 /* Works on Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
     width: 12px;
