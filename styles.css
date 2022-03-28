@@ -17,10 +17,9 @@ body {
     display:grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr repeat(7, 1fr);
-
     background: rgb(72, 67, 87);
     border-radius: 2rem;
-    padding: 1.1rem;
+    padding: .9rem;
 }
 .visor {
     font-size: 2rem;
