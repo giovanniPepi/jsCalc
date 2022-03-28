@@ -128,7 +128,7 @@ body {
     border: .3rem solid rgb(118, 108, 126);
 }
 img {
-    width: 65%;
+    width: 64%;
     transition: transform 1.5s cubic-bezier(0,.83,.27,1.55);  
 }
 
