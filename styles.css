@@ -15,8 +15,8 @@ body {
 }
 .container {
     display:grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr repeat(7, 1fr);
+    grid-template-columns: repeat(4, 3.6rem);
+    grid-template-rows: repeat(8, 3.8rem);
     background: rgb(72, 67, 87);
     border-radius: 2rem;
     padding: .9rem;
