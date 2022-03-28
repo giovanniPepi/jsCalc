@@ -16,7 +16,7 @@ body {
     display: flex; 
     flex-direction: column;
     align-items: center;   
-    gap: 1rem;
+    gap: .3rem;
     background: #fcd34de0;
     text-align: center;
     font-size: var(--fontSize);
