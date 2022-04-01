@@ -1,9 +1,22 @@
-const body = document.querySelector("body");
-const container = document.querySelector(".container")
-const numBtn = document.querySelectorAll('.buttons');
-const operatBtn = document.querySelectorAll(".operatBtn");
-const currentVisor = document.querySelector("#currentVisor");
-const resultP = document.querySelector("#resultP");
+//handles DOM Queries
+const dQuery = (function() {
+    const body = document.querySelector("body");
+    const container = document.querySelector(".container")
+    const numBtn = document.querySelectorAll('.buttons');
+    const operatBtn = document.querySelectorAll(".operatBtn");
+    const currentVisor = document.querySelector("#currentVisor");
+    const resultP = document.querySelector("#resultP");
+    const acBtn = document.querySelector("#acBtn");
+    const cBtn = document.querySelector("#cBtn");
+    const evaluateBtn = document.querySelector(".evaluate");
+
+
+    return {
+        body, container, numBtn, operatBtn, currentVisor, resultP, acBtn,
+        cBtn,
+    }
+})();
+
 let operationMode = null;
 let operand1 = '';
 let operand2 = '';
@@ -12,19 +25,16 @@ let shouldRefreshScreen = false;
 getListeners = () => {
     window.addEventListener('keydown', processKeyboardInpt);
     window.addEventListener('keyup', removeTransition);
+        
+    dQuery.acBtn.addEventListener("click", () => fullVisorClean());
     
-    acBtn = document.querySelector("#acBtn");
-    acBtn.addEventListener("click", () => fullVisorClean());
-    
-    cBtn = document.querySelector("#cBtn");
-    cBtn.addEventListener("click", fullVisorClean());
+    dQuery.cBtn.addEventListener("click", fullVisorClean());
 
-    numBtn.forEach((button) => 
+    dQuery.numBtn.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
     );      
-    operatBtn.forEach((btn => btn.addEventListener("click", () => setOperation(btn.textContent))
+    dQuery.operatBtn.forEach((btn => btn.addEventListener("click", () => setOperation(btn.textContent))
     ));
-    evaluateBtn = document.querySelector(".evaluate");
     evaluateBtn.addEventListener("click", () => evaluate());
 
     cBtn = document.querySelector("#cBtn");
@@ -97,6 +107,7 @@ evaluate = () => {
 setOperation = (operator) => {
     if (operationMode !== null) evaluate();
     if (currentVisor.textContent !== ".") operand1 = currentVisor.textContent;
+    if (opereator = "e^")
     operationMode = operator;   
     resultP.textContent = `${operand1} ${operationMode}`;
     visorClean();
