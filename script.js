@@ -23,26 +23,22 @@ let operand1 = '';
 let operand2 = '';
 let shouldRefreshScreen = false;
 
-const calculator = ((a, b, operator) => {
-    a = Number(a);
-    b = Number(b);
-    switch (operator) {
-        case '+':
-            return (a + b);
-        case '-': 
-            return (a - b);
-        case "x": 
-            return (a * b);
-        case "e":
-            return Math.pow(a, b);
-        case "÷":
-            if (b === 0) return;
-            else return a / b;
-        case "%":
-            return (b * a) / 100;
+const calculator = ((a, b) => {
+    const add = (a, b) => a + b;
+    const sub = (a, b) => a - b;
+    const mul = (a, b) => a * b;
+    const div = (a, b) => {
+        if(b === 0) return;
+        a / b;
     }
-})();
+    const pow = (a, b) => Math.pow(a, b);
+    const per = (a, b) => (b * a) / 100;
 
+    return {
+        add, sub, mul, div, pow, per,
+    }
+
+})();
 
 
 getListeners = () => {
@@ -98,7 +94,16 @@ round = (number) => {
 evaluate = () => {
     if (shouldRefreshScreen || operationMode === null) return;
     operand2 = currentVisor.textContent; 
-    currentVisor.textContent = round(getMath(operand1, operand2, operationMode));
+    switch(operationMode) {
+        case'+': {
+            currentVisor.textContent = round(calculator.add(Number(operand1), Number(operand2)));
+        }
+/* 
+        currentVisor.textContent = round(calculator(operand1, operand2)); */
+
+    }
+    
+
     resultP.textContent = `${operand1} ${operationMode} ${operand2} = ` ;
     if (operand2 == 0 && operationMode === "÷") {
         alert("Division by 0 is not possible");
@@ -117,7 +122,6 @@ setOperation = (operator) => {
 delNumber = () => {
     if(currentVisor.textContent === '.') return;
     string = currentVisor.textContent.toString().slice(0, -1);
-    console.log(string);
     currentVisor.textContent = string;
     procesedString = string.length;
     if (procesedString < 1) visorCleanBlink();    
