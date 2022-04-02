@@ -4,7 +4,7 @@ let operand2 = '';
 let shouldRefreshScreen = false;
 
 //handles DOM Queries
-const dQuery = (function() {
+dQuery = (function() {
     const body = document.querySelector("body");
     const container = document.querySelector(".container")
     const numBtn = document.querySelectorAll('.buttons');
@@ -30,8 +30,8 @@ const dQuery = (function() {
     }
 })();
 
-// handles CSS transitions
-const getTransitions = (function() {
+// handles CSS transitions and animations
+getTransitions = (() => {
 
     removeTransition = () => {
         const toRemove = document.querySelectorAll(".activeNm");
@@ -40,14 +40,51 @@ const getTransitions = (function() {
     simulateBtnClick = (number) => {                                        
         btnToPress = document.querySelector(`[data-number="${number}"]`).classList.add('activeNm');    
     };
+    stopBlinking = () => {
+        dQuery.currentVisor.setAttribute("class", 'visorP');
+    };
+    addBlinking = (currentVisor) => {
+        dQuery.currentVisor.setAttribute("class", 'visorPBlink');
+    };
+    visorCleanBlink = () => {
+        currentVisor.textContent = ".";
+        addBlinking(currentVisor);
+        shouldRefreshScreen = false;
+    };
+    fullVisorClean = () => {
+       resultP.textContent = "";
+       operand1 = '';
+       operand2 = '';
+       operationMode = null;
+       visorCleanBlink();
+    };
+    visorClean = () => {
+      currentVisor.textContent ="";
+      addBlinking(currentVisor);
+      shouldRefreshScreen = false;
+    };
+    delNumber = () => {
+        if(currentVisor.textContent === '.') return;
+        string = currentVisor.textContent.toString().slice(0, -1);
+        currentVisor.textContent = string;
+        procesedString = string.length;
+        if (procesedString < 1) getTransitions.visorCleanBlink();    
+    }
+
     return {
         removeTransition,
         simulateBtnClick,
+        stopBlinking,
+        addBlinking,
+        visorCleanBlink,
+        fullVisorClean,
+        visorClean,
+        delNumber,
     }
 })(); 
 
 // main math
-const calculator = ((a, b) => {
+calculator = ((a, b) => {
     const add = (a, b) => a + b;
     const sub = (a, b) => a - b;
     const mul = (a, b) => a * b;
@@ -64,18 +101,18 @@ const calculator = ((a, b) => {
 })();
 
 // set operations, evaluate
-const getOperations = (() => {
+getOperations = (() => {
 
     setOperation = (operator) => {
-        if (operationMode !== null) evaluate.evaluate();
+        if (operationMode !== null) evaluate();
         if (currentVisor.textContent !== ".") operand1 = currentVisor.textContent;
         if (opereator = "e^")
         operationMode = operator;   
         resultP.textContent = `${operand1} ${operationMode}`;
-        visorClean();
+        getTransitions.visorClean();
     }
     
-    const evaluate = () => {
+    evaluate = () => {
         if (shouldRefreshScreen || operationMode === null) return;
         operand2 = currentVisor.textContent; 
         switch(operationMode) {
@@ -101,7 +138,7 @@ const getOperations = (() => {
         resultP.textContent = `${operand1} ${operationMode} ${operand2} = ` ;
         if (operand2 == 0 && operationMode === "÷") {
         alert("Division by 0 is not possible");
-        fullVisorClean();
+        getTransitions.fullVisorClean();
     }
         operationMode = null;
     };
@@ -116,9 +153,9 @@ getListeners = () => {
     window.addEventListener('keydown', processKeyboardInpt);
     window.addEventListener('keyup', () => getTransitions.removeTransition());
         
-    dQuery.acBtn.addEventListener("click", () => fullVisorClean());
+    dQuery.acBtn.addEventListener("click", () => getTransitions.fullVisorClean());
     
-    dQuery.cBtn.addEventListener("click", fullVisorClean());
+    dQuery.cBtn.addEventListener("click", getTransitions.fullVisorClean());
 
     dQuery.numBtn.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
@@ -127,49 +164,22 @@ getListeners = () => {
     ));
     dQuery.evaluateBtn.addEventListener("click", () => getOperations.evaluate());
 
-    dQuery.cBtn.addEventListener("click", delNumber);
+    dQuery.cBtn.addEventListener("click", getTransitions.delNumber);
 
     dQuery.pointBtn.addEventListener("click", insertPoint); 
 }
-stopBlinking = () => {
-    currentVisor.setAttribute("class", 'visorP');
-}
-addBlinking = (currentVisor) => {
-    currentVisor.setAttribute("class", 'visorPBlink');
-}
-fullVisorClean = () => {
-    resultP.textContent = "";
-    operand1 = '';
-    operand2 = '';
-    operationMode = null;
-    visorCleanBlink();
-}
-visorCleanBlink = () => {
-    currentVisor.textContent = ".";
-    addBlinking(currentVisor);
-    shouldRefreshScreen = false;
-}
-visorClean = () => {
-    currentVisor.textContent ="";
-    addBlinking(currentVisor);
-    shouldRefreshScreen = false;
-}
+
+
 writeVisorNumber = (number) => {
-    if (currentVisor.textContent === '.' || shouldRefreshScreen) visorClean();
-    stopBlinking();
+    if (currentVisor.textContent === '.' || shouldRefreshScreen) getTransitions.visorClean();
+    getTransitions.stopBlinking();
     currentVisor.textContent += number;
 }
 round = (number) => {
     return Math.round(number*1000000) / 1000000;
 }
 
-delNumber = () => {
-    if(currentVisor.textContent === '.') return;
-    string = currentVisor.textContent.toString().slice(0, -1);
-    currentVisor.textContent = string;
-    procesedString = string.length;
-    if (procesedString < 1) visorCleanBlink();    
-}
+
 getKeyCode = (e) => {
     if (e.keyCode === 49 || e.keyCode === 97) getTransitions.simulateBtnClick(1);
     else if (e.keyCode === 98 || e.keyCode === 50) getTransitions.simulateBtnClick(2);
@@ -203,7 +213,7 @@ processKeyboardOperator = (keyOp) => {
     if (keyOp === "%") return "%";
 }
 insertPoint = () => {
-    visorClean();
+    getTransitions.visorClean();
     if (currentVisor.textContent === "") currentVisor.textContent = 0;
     if (currentVisor.textContent.includes(".")) return
     writeVisorNumber(".");
@@ -211,10 +221,10 @@ insertPoint = () => {
 processKeyboardInpt = (e) => {
     e.key = e.key.toLowerCase();
     if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
-    if (e.key === "c" || e.key === "Escape") delNumber();
-    if (e.key === 'a') fullVisorClean();
+    if (e.key === "c" || e.key === "Escape") getTransitions.delNumber();
+    if (e.key === 'a') getTransitions.fullVisorClean();
     if (e.key === "Enter") getOperations.evaluate();
-    if (e.key === "Backspace") delNumber();
+    if (e.key === "Backspace") getTransitions.delNumber();
     if (e.key === "." || e.key === ",") insertPoint();
     if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || e.key === "x" || e.key === "e" || e.key === "%") getOperations.setOperation(processKeyboardOperator(e.key));
     getKeyCode(e)
