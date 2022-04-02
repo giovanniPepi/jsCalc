@@ -46,7 +46,6 @@ const getTransitions = (function() {
     }
 })(); 
 
-
 // main math
 const calculator = ((a, b) => {
     const add = (a, b) => a + b;
@@ -98,7 +97,6 @@ const getOperations = (() => {
             case '%': 
                 currentVisor.textContent = round(calculator.per(Number(operand1), Number(operand2)));
                 break;
-
         }
         resultP.textContent = `${operand1} ${operationMode} ${operand2} = ` ;
         if (operand2 == 0 && operationMode === "÷") {
