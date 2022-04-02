@@ -1,3 +1,8 @@
+let operationMode = null;
+let operand1 = '';
+let operand2 = '';
+let shouldRefreshScreen = false;
+
 //handles DOM Queries
 const dQuery = (function() {
     const body = document.querySelector("body");
@@ -10,18 +15,37 @@ const dQuery = (function() {
     const cBtn = document.querySelector("#cBtn");
     const evaluateBtn = document.querySelector(".evaluate");
     const pointBtn = document.querySelector("#point");
-    const toRemove = document.querySelectorAll(".activeNm");
     
     return {
-        body, container, numBtn, operatBtn, currentVisor, resultP, acBtn,
-        cBtn,evaluateBtn, pointBtn, toRemove, 
+        body,
+        container,
+        numBtn,
+        operatBtn,
+        currentVisor,
+        resultP,
+        acBtn,
+        cBtn,
+        evaluateBtn,
+        pointBtn,
     }
 })();
 
-let operationMode = null;
-let operand1 = '';
-let operand2 = '';
-let shouldRefreshScreen = false;
+// handles CSS transitions
+const getTransitions = (function() {
+
+    removeTransition = () => {
+        const toRemove = document.querySelectorAll(".activeNm");
+        toRemove.forEach(remove => remove.classList.remove('activeNm'));
+    };    
+    simulateBtnClick = (number) => {                                        
+        btnToPress = document.querySelector(`[data-number="${number}"]`).classList.add('activeNm');    
+    };
+    return {
+        removeTransition,
+        simulateBtnClick,
+    }
+})(); 
+
 
 // main math
 const calculator = ((a, b) => {
@@ -40,42 +64,59 @@ const calculator = ((a, b) => {
     }
 })();
 
-// evaluate operands, operator, and writes to visor
-evaluate = () => {
-    if (shouldRefreshScreen || operationMode === null) return;
-    operand2 = currentVisor.textContent; 
-    switch(operationMode) {
-        case '+':
-            currentVisor.textContent = round(calculator.add(Number(operand1), Number(operand2)));
-            break;
-        case '-': 
-            currentVisor.textContent = round(calculator.sub(Number(operand1), Number(operand2)));
-            break;
-        case 'x': 
-            currentVisor.textContent = round(calculator.mul(Number(operand1), Number(operand2)));
-            break;
-        case '÷': 
-            currentVisor.textContent = round(calculator.div(Number(operand1), Number(operand2)));
-            break;
-        case 'e':
-            currentVisor.textContent = round(calculator.pow(Number(operand1), Number(operand2)));
-            break;
-        case '%': 
-            currentVisor.textContent = round(calculator.per(Number(operand1), Number(operand2)));
-            break;
+// set operations, evaluate
+const getOperations = (() => {
 
+    setOperation = (operator) => {
+        if (operationMode !== null) evaluate.evaluate();
+        if (currentVisor.textContent !== ".") operand1 = currentVisor.textContent;
+        if (opereator = "e^")
+        operationMode = operator;   
+        resultP.textContent = `${operand1} ${operationMode}`;
+        visorClean();
     }
-    resultP.textContent = `${operand1} ${operationMode} ${operand2} = ` ;
-    if (operand2 == 0 && operationMode === "÷") {
+    
+    const evaluate = () => {
+        if (shouldRefreshScreen || operationMode === null) return;
+        operand2 = currentVisor.textContent; 
+        switch(operationMode) {
+            case '+':
+                currentVisor.textContent = round(calculator.add(Number(operand1), Number(operand2)));
+                break;
+            case '-': 
+                currentVisor.textContent = round(calculator.sub(Number(operand1), Number(operand2)));
+                break;
+            case 'x': 
+                currentVisor.textContent = round(calculator.mul(Number(operand1), Number(operand2)));
+                break;
+            case '÷': 
+                currentVisor.textContent = round(calculator.div(Number(operand1), Number(operand2)));
+                break;
+            case 'e':
+                currentVisor.textContent = round(calculator.pow(Number(operand1), Number(operand2)));
+                break;
+            case '%': 
+                currentVisor.textContent = round(calculator.per(Number(operand1), Number(operand2)));
+                break;
+
+        }
+        resultP.textContent = `${operand1} ${operationMode} ${operand2} = ` ;
+        if (operand2 == 0 && operationMode === "÷") {
         alert("Division by 0 is not possible");
         fullVisorClean();
     }
-    operationMode = null;
-}
+        operationMode = null;
+    };
+    
+    return {
+        evaluate, setOperation,
+    }
+
+})();
 
 getListeners = () => {
     window.addEventListener('keydown', processKeyboardInpt);
-    window.addEventListener('keyup', removeTransition);
+    window.addEventListener('keyup', () => getTransitions.removeTransition());
         
     dQuery.acBtn.addEventListener("click", () => fullVisorClean());
     
@@ -84,9 +125,9 @@ getListeners = () => {
     dQuery.numBtn.forEach((button) => 
         button.addEventListener("click", () => writeVisorNumber(button.textContent))
     );      
-    dQuery.operatBtn.forEach((btn => btn.addEventListener("click", () => setOperation(btn.textContent))
+    dQuery.operatBtn.forEach((btn => btn.addEventListener("click", () => getOperations.setOperation(btn.textContent))
     ));
-    dQuery.evaluateBtn.addEventListener("click", () => evaluate());
+    dQuery.evaluateBtn.addEventListener("click", () => getOperations.evaluate());
 
     dQuery.cBtn.addEventListener("click", delNumber);
 
@@ -123,14 +164,7 @@ writeVisorNumber = (number) => {
 round = (number) => {
     return Math.round(number*1000000) / 1000000;
 }
-setOperation = (operator) => {
-    if (operationMode !== null) evaluate();
-    if (currentVisor.textContent !== ".") operand1 = currentVisor.textContent;
-    if (opereator = "e^")
-    operationMode = operator;   
-    resultP.textContent = `${operand1} ${operationMode}`;
-    visorClean();
-}
+
 delNumber = () => {
     if(currentVisor.textContent === '.') return;
     string = currentVisor.textContent.toString().slice(0, -1);
@@ -138,30 +172,27 @@ delNumber = () => {
     procesedString = string.length;
     if (procesedString < 1) visorCleanBlink();    
 }
-simulateBtnClick = (number) => {                                        
-    btnToPress = document.querySelector(`[data-number="${number}"]`).classList.add('activeNm');    
-}
 getKeyCode = (e) => {
-    if (e.keyCode === 49 || e.keyCode === 97) simulateBtnClick(1);
-    else if (e.keyCode === 98 || e.keyCode === 50) simulateBtnClick(2);
-    else if (e.keyCode === 51 || e.keyCode === 99) simulateBtnClick(3);
-    else if (e.keyCode === 52 || e.keyCode === 100) simulateBtnClick(4);
-    else if (e.keyCode === 53 || e.keyCode === 101) simulateBtnClick(5);
-    else if (e.keyCode === 54 || e.keyCode === 102) simulateBtnClick(6);
-    else if (e.keyCode === 55 || e.keyCode === 103) simulateBtnClick(7);
-    else if (e.keyCode === 56 || e.keyCode === 104) simulateBtnClick(8);
-    else if (e.keyCode === 57 || e.keyCode === 105) simulateBtnClick(9);
-    else if (e.keyCode === 48 || e.keyCode === 96) simulateBtnClick(0);
-    else if (e.keyCode === 106 || e.keyCode === 88) simulateBtnClick('*');
-    else if (e.keyCode === 191 || e.keyCode === 111) simulateBtnClick('/');
-    else if (e.keyCode === 190 || e.keyCode === 110) simulateBtnClick('.');
-    else if (e.keyCode === 67) simulateBtnClick('c');
-    else if (e.keyCode === 69) simulateBtnClick('e');
-    else if (e.keyCode === 61 || e.keyCode === 187) simulateBtnClick('='); 
-    else if (e.keyCode === 107) simulateBtnClick('+');
-    else if (e.keyCode === 109 || e.keyCode === 173) simulateBtnClick('-');
-    else if (e.keyCode === 65) simulateBtnClick('a');
-    else if (e.keyCode === 13) simulateBtnClick('=');
+    if (e.keyCode === 49 || e.keyCode === 97) getTransitions.simulateBtnClick(1);
+    else if (e.keyCode === 98 || e.keyCode === 50) getTransitions.simulateBtnClick(2);
+    else if (e.keyCode === 51 || e.keyCode === 99) getTransitions.simulateBtnClick(3);
+    else if (e.keyCode === 52 || e.keyCode === 100) getTransitions.simulateBtnClick(4);
+    else if (e.keyCode === 53 || e.keyCode === 101) getTransitions.simulateBtnClick(5);
+    else if (e.keyCode === 54 || e.keyCode === 102) getTransitions.simulateBtnClick(6);
+    else if (e.keyCode === 55 || e.keyCode === 103) getTransitions.simulateBtnClick(7);
+    else if (e.keyCode === 56 || e.keyCode === 104) getTransitions.simulateBtnClick(8);
+    else if (e.keyCode === 57 || e.keyCode === 105) getTransitions.simulateBtnClick(9);
+    else if (e.keyCode === 48 || e.keyCode === 96) getTransitions.simulateBtnClick(0);
+    else if (e.keyCode === 106 || e.keyCode === 88) getTransitions.simulateBtnClick('*');
+    else if (e.keyCode === 191 || e.keyCode === 111) getTransitions.simulateBtnClick('/');
+    else if (e.keyCode === 190 || e.keyCode === 110) getTransitions.simulateBtnClick('.');
+    else if (e.keyCode === 67) getTransitions.simulateBtnClick('c');
+    else if (e.keyCode === 69) getTransitions.simulateBtnClick('e');
+    else if (e.keyCode === 61 || e.keyCode === 187) getTransitions.simulateBtnClick('='); 
+    else if (e.keyCode === 107) getTransitions.simulateBtnClick('+');
+    else if (e.keyCode === 109 || e.keyCode === 173) getTransitions.simulateBtnClick('-');
+    else if (e.keyCode === 65) getTransitions.simulateBtnClick('a');
+    else if (e.keyCode === 13) getTransitions.simulateBtnClick('=');
 }
 processKeyboardOperator = (keyOp) => {
     keyOp = keyOp.toLowerCase();
@@ -184,14 +215,11 @@ processKeyboardInpt = (e) => {
     if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
     if (e.key === "c" || e.key === "Escape") delNumber();
     if (e.key === 'a') fullVisorClean();
-    if (e.key === "Enter") evaluate();
+    if (e.key === "Enter") getOperations.evaluate();
     if (e.key === "Backspace") delNumber();
     if (e.key === "." || e.key === ",") insertPoint();
-    if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || e.key === "x" || e.key === "e" || e.key === "%") setOperation(processKeyboardOperator(e.key));
+    if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || e.key === "x" || e.key === "e" || e.key === "%") getOperations.setOperation(processKeyboardOperator(e.key));
     getKeyCode(e)
-}
-removeTransition = () => {
-    dQuery.toRemove.forEach(remove => remove.classList.remove('activeNm'));
 }
 getListeners();
 
