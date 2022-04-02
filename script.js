@@ -173,8 +173,7 @@ main = (() => {
         
         return {
             evaluate, setOperation,
-        }
-
+        };
     })();
 
     // listen for clicks and keyboard
