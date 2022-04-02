@@ -9,11 +9,12 @@ const dQuery = (function() {
     const acBtn = document.querySelector("#acBtn");
     const cBtn = document.querySelector("#cBtn");
     const evaluateBtn = document.querySelector(".evaluate");
-
-
+    const pointBtn = document.querySelector("#point");
+    const toRemove = document.querySelectorAll(".activeNm");
+    
     return {
         body, container, numBtn, operatBtn, currentVisor, resultP, acBtn,
-        cBtn,
+        cBtn,evaluateBtn, pointBtn, toRemove, 
     }
 })();
 
@@ -21,6 +22,28 @@ let operationMode = null;
 let operand1 = '';
 let operand2 = '';
 let shouldRefreshScreen = false;
+
+const calculator = ((a, b, operator) => {
+    a = Number(a);
+    b = Number(b);
+    switch (operator) {
+        case '+':
+            return (a + b);
+        case '-': 
+            return (a - b);
+        case "x": 
+            return (a * b);
+        case "e":
+            return Math.pow(a, b);
+        case "÷":
+            if (b === 0) return;
+            else return a / b;
+        case "%":
+            return (b * a) / 100;
+    }
+})();
+
+
 
 getListeners = () => {
     window.addEventListener('keydown', processKeyboardInpt);
@@ -35,13 +58,11 @@ getListeners = () => {
     );      
     dQuery.operatBtn.forEach((btn => btn.addEventListener("click", () => setOperation(btn.textContent))
     ));
-    evaluateBtn.addEventListener("click", () => evaluate());
+    dQuery.evaluateBtn.addEventListener("click", () => evaluate());
 
-    cBtn = document.querySelector("#cBtn");
-    cBtn.addEventListener("click", delNumber);
+    dQuery.cBtn.addEventListener("click", delNumber);
 
-    pointBtn = document.querySelector("#point");
-    pointBtn.addEventListener("click", insertPoint); 
+    dQuery.pointBtn.addEventListener("click", insertPoint); 
 }
 stopBlinking = () => {
     currentVisor.setAttribute("class", 'visorP');
@@ -71,25 +92,6 @@ writeVisorNumber = (number) => {
     stopBlinking();
     currentVisor.textContent += number;
 }
-getMath = (a, b, operator) => {
-    a = Number(a);
-    b = Number(b);
-    switch (operator) {
-        case '+':
-            return (a + b);
-        case '-': 
-            return (a - b);
-        case "x": 
-            return (a * b);
-        case "e":
-            return Math.pow(a, b);
-        case "÷":
-            if (b === 0) return;
-            else return a / b;
-        case "%":
-            return (b * a) / 100;
-    }
-};
 round = (number) => {
     return Math.round(number*1000000) / 1000000;
 }
@@ -173,8 +175,7 @@ processKeyboardInpt = (e) => {
     getKeyCode(e)
 }
 removeTransition = () => {
-    toRemove = document.querySelectorAll(".activeNm");
-    toRemove.forEach(remove => remove.classList.remove('activeNm'));
+    dQuery.toRemove.forEach(remove => remove.classList.remove('activeNm'));
 }
 getListeners();
 
