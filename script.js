@@ -23,23 +23,55 @@ let operand1 = '';
 let operand2 = '';
 let shouldRefreshScreen = false;
 
+// main math
 const calculator = ((a, b) => {
     const add = (a, b) => a + b;
     const sub = (a, b) => a - b;
     const mul = (a, b) => a * b;
     const div = (a, b) => {
         if(b === 0) return;
-        a / b;
-    }
+        return a / b;
+    };
     const pow = (a, b) => Math.pow(a, b);
     const per = (a, b) => (b * a) / 100;
 
     return {
         add, sub, mul, div, pow, per,
     }
-
 })();
 
+// evaluate operands, operator, and writes to visor
+evaluate = () => {
+    if (shouldRefreshScreen || operationMode === null) return;
+    operand2 = currentVisor.textContent; 
+    switch(operationMode) {
+        case '+':
+            currentVisor.textContent = round(calculator.add(Number(operand1), Number(operand2)));
+            break;
+        case '-': 
+            currentVisor.textContent = round(calculator.sub(Number(operand1), Number(operand2)));
+            break;
+        case 'x': 
+            currentVisor.textContent = round(calculator.mul(Number(operand1), Number(operand2)));
+            break;
+        case '÷': 
+            currentVisor.textContent = round(calculator.div(Number(operand1), Number(operand2)));
+            break;
+        case 'e':
+            currentVisor.textContent = round(calculator.pow(Number(operand1), Number(operand2)));
+            break;
+        case '%': 
+            currentVisor.textContent = round(calculator.per(Number(operand1), Number(operand2)));
+            break;
+
+    }
+    resultP.textContent = `${operand1} ${operationMode} ${operand2} = ` ;
+    if (operand2 == 0 && operationMode === "÷") {
+        alert("Division by 0 is not possible");
+        fullVisorClean();
+    }
+    operationMode = null;
+}
 
 getListeners = () => {
     window.addEventListener('keydown', processKeyboardInpt);
@@ -90,26 +122,6 @@ writeVisorNumber = (number) => {
 }
 round = (number) => {
     return Math.round(number*1000000) / 1000000;
-}
-evaluate = () => {
-    if (shouldRefreshScreen || operationMode === null) return;
-    operand2 = currentVisor.textContent; 
-    switch(operationMode) {
-        case'+': {
-            currentVisor.textContent = round(calculator.add(Number(operand1), Number(operand2)));
-        }
-/* 
-        currentVisor.textContent = round(calculator(operand1, operand2)); */
-
-    }
-    
-
-    resultP.textContent = `${operand1} ${operationMode} ${operand2} = ` ;
-    if (operand2 == 0 && operationMode === "÷") {
-        alert("Division by 0 is not possible");
-        fullVisorClean();
-    }
-    operationMode = null;
 }
 setOperation = (operator) => {
     if (operationMode !== null) evaluate();
