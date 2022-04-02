@@ -116,6 +116,9 @@ calculator = ((a, b) => {
 // set operations, evaluate
 getOperations = (() => {
 
+    round = (number) => {
+        return Math.round(number*1000000) / 1000000;
+    };
     setOperation = (operator) => {
         if (operationMode !== null) evaluate();
         if (currentVisor.textContent !== ".") operand1 = currentVisor.textContent;
@@ -123,7 +126,7 @@ getOperations = (() => {
         operationMode = operator;   
         resultP.textContent = `${operand1} ${operationMode}`;
         getTransitions.visorClean();
-    }
+    };
     
     evaluate = () => {
         if (shouldRefreshScreen || operationMode === null) return;
@@ -182,10 +185,6 @@ getListeners = () => {
     dQuery.pointBtn.addEventListener("click", getTransitions.insertPoint); 
 }
 
-
-round = (number) => {
-    return Math.round(number*1000000) / 1000000;
-}
 getKeyCode = (e) => {
     if (e.keyCode === 49 || e.keyCode === 97) getTransitions.simulateBtnClick(1);
     else if (e.keyCode === 98 || e.keyCode === 50) getTransitions.simulateBtnClick(2);
