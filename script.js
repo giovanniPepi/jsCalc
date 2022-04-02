@@ -1,4 +1,5 @@
-main = (() => {let operationMode = null;
+main = (() => {
+    let operationMode = null;
     let operand1 = '';
     let operand2 = '';
     let shouldRefreshScreen = false;
@@ -36,32 +37,39 @@ main = (() => {let operationMode = null;
             const toRemove = document.querySelectorAll(".activeNm");
             toRemove.forEach(remove => remove.classList.remove('activeNm'));
         };    
+
         simulateBtnClick = (number) => {                                        
             btnToPress = document.querySelector(`[data-number="${number}"]`).classList.add('activeNm');    
         };
+
         stopBlinking = () => {
             dQuery.currentVisor.setAttribute("class", 'visorP');
         };
+
         addBlinking = (currentVisor) => {
             dQuery.currentVisor.setAttribute("class", 'visorPBlink');
         };
+
         visorCleanBlink = () => {
             currentVisor.textContent = ".";
             addBlinking(currentVisor);
             shouldRefreshScreen = false;
         };
+
         fullVisorClean = () => {
-        resultP.textContent = "";
-        operand1 = '';
-        operand2 = '';
-        operationMode = null;
-        visorCleanBlink();
+            resultP.textContent = "";
+            operand1 = '';
+            operand2 = '';
+            operationMode = null;
+            visorCleanBlink();
         };
+
         visorClean = () => {
-        currentVisor.textContent ="";
-        addBlinking(currentVisor);
-        shouldRefreshScreen = false;
+            currentVisor.textContent ="";
+            addBlinking(currentVisor);
+            shouldRefreshScreen = false;
         };
+
         delNumber = () => {
             if(currentVisor.textContent === '.') return;
             string = currentVisor.textContent.toString().slice(0, -1);
@@ -69,12 +77,14 @@ main = (() => {let operationMode = null;
             procesedString = string.length;
             if (procesedString < 1) getTransitions.visorCleanBlink();    
         };
+
         insertPoint = () => {
             if (currentVisor.textContent === "." || currentVisor.textContent === '') currentVisor.textContent = 0;
             //avoids more than one .
             if (currentVisor.textContent.includes(".")) return
             writeVisorNumber(".");
         };
+
         writeVisorNumber = (number) => {
             if (currentVisor.textContent === '.' || shouldRefreshScreen) visorClean();
             stopBlinking();
@@ -114,10 +124,11 @@ main = (() => {let operationMode = null;
 
     // set operations, evaluate
     getOperations = (() => {
-
+        
         round = (number) => {
             return Math.round(number*1000000) / 1000000;
         };
+
         setOperation = (operator) => {
             if (operationMode !== null) evaluate();
             if (currentVisor.textContent !== ".") operand1 = currentVisor.textContent;
@@ -149,12 +160,14 @@ main = (() => {let operationMode = null;
                 case '%': 
                     currentVisor.textContent = round(calculator.per(Number(operand1), Number(operand2)));
                     break;
-            }
+            };
+
             resultP.textContent = `${operand1} ${operationMode} ${operand2} = ` ;
             if (operand2 == 0 && operationMode === "÷") {
             alert("Division by 0 is not possible");
             getTransitions.fullVisorClean();
-        }
+        };
+
             operationMode = null;
         };
         
@@ -166,13 +179,16 @@ main = (() => {let operationMode = null;
 
     // listen for clicks and keyboard
     getListeners = (() => {            
+
         dQuery.acBtn.addEventListener("click", () => getTransitions.fullVisorClean());        
         dQuery.cBtn.addEventListener("click", getTransitions.fullVisorClean());
         dQuery.numBtn.forEach((button) => 
             button.addEventListener("click", () => getTransitions.writeVisorNumber(button.textContent))
         );      
+
         dQuery.operatBtn.forEach((btn => btn.addEventListener("click", () => getOperations.setOperation(btn.textContent))
         ));
+
         dQuery.evaluateBtn.addEventListener("click", () => getOperations.evaluate());
         dQuery.cBtn.addEventListener("click", getTransitions.delNumber);
         dQuery.pointBtn.addEventListener("click", getTransitions.insertPoint); 
@@ -188,6 +204,7 @@ main = (() => {let operationMode = null;
             if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || e.key === "x" || e.key === "e" || e.key === "%") getOperations.setOperation(processKeyboardOperator(e.key));
             getKeyCode(e)
         };
+
         getKeyCode = (e) => {
             if (e.keyCode === 49 || e.keyCode === 97) getTransitions.simulateBtnClick(1);
             else if (e.keyCode === 98 || e.keyCode === 50) getTransitions.simulateBtnClick(2);
@@ -209,7 +226,8 @@ main = (() => {let operationMode = null;
             else if (e.keyCode === 109 || e.keyCode === 173) getTransitions.simulateBtnClick('-');
             else if (e.keyCode === 65) getTransitions.simulateBtnClick('a');
             else if (e.keyCode === 13) getTransitions.simulateBtnClick('=');
-        }
+        };
+
         processKeyboardOperator = (keyOp) => {
             keyOp = keyOp.toLowerCase();
             if (keyOp === '+') return "+";
@@ -220,11 +238,9 @@ main = (() => {let operationMode = null;
             if (keyOp === "x") return "x";
             if (keyOp === "%") return "%";
         };
+
         window.addEventListener('keydown', processKeyboardInpt);
         window.addEventListener('keyup', () => getTransitions.removeTransition());
-
-        return {
-        }
     })();
 })();
 
