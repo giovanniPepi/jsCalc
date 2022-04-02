@@ -75,7 +75,12 @@ getTransitions = (() => {
         //avoids more than one .
         if (currentVisor.textContent.includes(".")) return
         writeVisorNumber(".");
-    }
+    };
+    writeVisorNumber = (number) => {
+        if (currentVisor.textContent === '.' || shouldRefreshScreen) visorClean();
+        stopBlinking();
+        currentVisor.textContent += number;
+    };
 
     return {
         removeTransition,
@@ -87,6 +92,7 @@ getTransitions = (() => {
         visorClean,
         delNumber,
         insertPoint,
+        writeVisorNumber,
     }
 })(); 
 
@@ -165,7 +171,7 @@ getListeners = () => {
     dQuery.cBtn.addEventListener("click", getTransitions.fullVisorClean());
 
     dQuery.numBtn.forEach((button) => 
-        button.addEventListener("click", () => writeVisorNumber(button.textContent))
+        button.addEventListener("click", () => getTransitions.writeVisorNumber(button.textContent))
     );      
     dQuery.operatBtn.forEach((btn => btn.addEventListener("click", () => getOperations.setOperation(btn.textContent))
     ));
@@ -177,11 +183,6 @@ getListeners = () => {
 }
 
 
-writeVisorNumber = (number) => {
-    if (currentVisor.textContent === '.' || shouldRefreshScreen) getTransitions.visorClean();
-    getTransitions.stopBlinking();
-    currentVisor.textContent += number;
-}
 round = (number) => {
     return Math.round(number*1000000) / 1000000;
 }
@@ -219,7 +220,7 @@ processKeyboardOperator = (keyOp) => {
 }
 processKeyboardInpt = (e) => {
     e.key = e.key.toLowerCase();
-    if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
+    if (e.key >= 0 && e.key <=9) getTransitions.writeVisorNumber(e.key);
     if (e.key === "c" || e.key === "Escape") getTransitions.delNumber();
     if (e.key === 'a') getTransitions.fullVisorClean();
     if (e.key === "Enter") getOperations.evaluate();
