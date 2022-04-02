@@ -69,6 +69,12 @@ getTransitions = (() => {
         currentVisor.textContent = string;
         procesedString = string.length;
         if (procesedString < 1) getTransitions.visorCleanBlink();    
+    };
+    insertPoint = () => {
+        if (currentVisor.textContent === "." || currentVisor.textContent === '') currentVisor.textContent = 0;
+        //avoids more than one .
+        if (currentVisor.textContent.includes(".")) return
+        writeVisorNumber(".");
     }
 
     return {
@@ -80,6 +86,7 @@ getTransitions = (() => {
         fullVisorClean,
         visorClean,
         delNumber,
+        insertPoint,
     }
 })(); 
 
@@ -166,7 +173,7 @@ getListeners = () => {
 
     dQuery.cBtn.addEventListener("click", getTransitions.delNumber);
 
-    dQuery.pointBtn.addEventListener("click", insertPoint); 
+    dQuery.pointBtn.addEventListener("click", getTransitions.insertPoint); 
 }
 
 
@@ -178,8 +185,6 @@ writeVisorNumber = (number) => {
 round = (number) => {
     return Math.round(number*1000000) / 1000000;
 }
-
-
 getKeyCode = (e) => {
     if (e.keyCode === 49 || e.keyCode === 97) getTransitions.simulateBtnClick(1);
     else if (e.keyCode === 98 || e.keyCode === 50) getTransitions.simulateBtnClick(2);
@@ -212,12 +217,6 @@ processKeyboardOperator = (keyOp) => {
     if (keyOp === "x") return "x";
     if (keyOp === "%") return "%";
 }
-insertPoint = () => {
-    getTransitions.visorClean();
-    if (currentVisor.textContent === "") currentVisor.textContent = 0;
-    if (currentVisor.textContent.includes(".")) return
-    writeVisorNumber(".");
-}
 processKeyboardInpt = (e) => {
     e.key = e.key.toLowerCase();
     if (e.key >= 0 && e.key <=9) writeVisorNumber(e.key);
@@ -225,7 +224,7 @@ processKeyboardInpt = (e) => {
     if (e.key === 'a') getTransitions.fullVisorClean();
     if (e.key === "Enter") getOperations.evaluate();
     if (e.key === "Backspace") getTransitions.delNumber();
-    if (e.key === "." || e.key === ",") insertPoint();
+    if (e.key === "." || e.key === ",") getTransitions.insertPoint();
     if (e.key == "+" || e.key === "-" || e.key === "/" || e.key === "*" || e.key === "x" || e.key === "e" || e.key === "%") getOperations.setOperation(processKeyboardOperator(e.key));
     getKeyCode(e)
 }
