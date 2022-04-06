@@ -240,16 +240,15 @@ main = (() => {
 
         window.addEventListener('keydown', processKeyboardInpt);
         window.addEventListener('keyup', () => getTransitions.removeTransition());
+        window.addEventListener('touchend', () => removeTransition());
     })();
 
     //handling mobile touch 
     window.onload = function() {
       if(/iP(hone|ad)/.test(window.navigator.userAgent)) {
-          alert("IPHONE!")
           document.body.addEventListener('touchstart', function() {}, false);
       }
       if(/Android/.test(window.navigator.userAgent)) {
-        alert("ANDROID!!!!!!!!!!!!!")
         document.body.addEventListener('touchstart', function() {}, false);
     }
   }
