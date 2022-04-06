@@ -240,7 +240,7 @@ main = (() => {
 
         window.addEventListener('keydown', processKeyboardInpt);
         window.addEventListener('keyup', () => getTransitions.removeTransition());
-        window.addEventListener('touchend', () => removeTransition());
+        window.addEventListener('touchend', () => getTransitions.removeTransition());
     })();
 
     //handling mobile touch 
