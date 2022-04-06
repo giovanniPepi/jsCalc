@@ -1,7 +1,7 @@
 # jsCalc
 
-<h1>A Calculator made with JavaScript</h1>
-
+<h1>A Calculator 🔢 made with JavaScript</h1>
+<i>"You won't always have a calculator with you"</i> - but you can carry JavaScript around! 
 <div>
   <h3>Keyboard Shortcuts:</h3>
   <h4>C - Delete the last digit</h4>
