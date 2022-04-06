@@ -246,11 +246,11 @@ main = (() => {
     //handling mobile touch 
     window.onload = function() {
       if(/iP(hone|ad)/.test(window.navigator.userAgent)) {
-          document.body.addEventListener('touchstart', function() {}, false);
+          document.body.addEventListener('touchstart', processKeyboardInpt, false);
       }
       if(/Android/.test(window.navigator.userAgent)) {
-        document.body.addEventListener('touchstart', function() {}, false);
-    }
+        document.body.addEventListener('touchstart', processKeyboardInpt, false);
+      }
   }
 
 })();
