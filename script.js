@@ -237,19 +237,17 @@ main = (() => {
             if (keyOp === "x") return "x";
             if (keyOp === "%") return "%";
         };
-
         window.addEventListener('keydown', processKeyboardInpt);
         window.addEventListener('keyup', () => getTransitions.removeTransition());
-        window.addEventListener('touchend', () => getTransitions.removeTransition());
     })();
 
-    //handling mobile touch 
+    //handles mobile touch 
     window.onload = function() {
       if(/iP(hone|ad)/.test(window.navigator.userAgent)) {
-          document.body.addEventListener('touchstart', processKeyboardInpt, false);
+        window.addEventListener('touchend', () => getTransitions.removeTransition());
       }
       if(/Android/.test(window.navigator.userAgent)) {
-        document.body.addEventListener('touchstart', processKeyboardInpt, false);
+        window.addEventListener('touchend', () => getTransitions.removeTransition());
       }
   }
 
