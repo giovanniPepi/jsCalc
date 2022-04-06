@@ -241,5 +241,17 @@ main = (() => {
         window.addEventListener('keydown', processKeyboardInpt);
         window.addEventListener('keyup', () => getTransitions.removeTransition());
     })();
+
+    //handling mobile touch 
+    window.onload = function() {
+      if(/iP(hone|ad)/.test(window.navigator.userAgent)) {
+          document.body.addEventListener('touchstart', function() {}, false);
+      }
+      if(/android)/.test(window.navigator.userAgent)) {
+        alert("ANDROID!!!!!!!!!!!!!")
+        document.body.addEventListener('touchstart', function() {}, false);
+    }
+  }
+
 })();
 
