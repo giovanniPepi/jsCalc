@@ -98,19 +98,19 @@ body {
 .buttonsFunc {
     border: .4rem solid var(--redBtn);
     color:var(--redBtn);
-}
+}/* 
 .buttonsFunc:hover {
     background-color:var(--redBtn);
     color:var(--myWhite);
-}
+} */
 .buttonsFunc:active {
     background-color: var(--activeRedBtn);
     border: .5rem solid var(--activeRedBtn);
     color:var(--myWhite);
-}
+}/* 
 .buttons:hover, .operatBtn:hover, .evaluate:hover {
     background-color:  var(--hoverBtn);
-}
+} */
 .buttons:active, .operatBtn:active, .evaluate:active, .activeNm {
     background-color:  var(--btnActive);
     border: .5rem solid var(--btnActive);
